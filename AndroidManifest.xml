@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="net.muteheadlight.dockredir"
+      android:versionCode="1"
+      android:versionName="1.0">
+<uses-sdk android:targetSdkVersion="8" android:minSdkVersion="8"></uses-sdk>
+
+
+    <application android:icon="@drawable/icon" android:theme="@android:style/Theme.NoTitleBar" android:label="@string/app_name">
+        <receiver android:name="net.muteheadlight.docksoundredir.dockSoundRedirect">
+                    <intent-filter>
+                <category android:name="android.intent.category.CAR_DOCK" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+        <activity android:name="net.muteheadlight.docksoundredir.dockTrigger">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <service android:name="net.muteheadlight.docksoundredir.dockRedirRegisterer"></service>
+
+    </application>
+</manifest>
