@@ -10,6 +10,7 @@
         <ToggleButton android:layout_width="wrap_content" android:text="ToggleButton" android:layout_height="wrap_content" android:id="@+id/toggleDesk"></ToggleButton>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/textView1" android:text="Redirect Audio Output with Desk Dock"></TextView>
     </LinearLayout>
+    <ToggleButton android:text="ToggleButton" android:id="@+id/toggleButton1" android:layout_width="wrap_content" android:layout_height="wrap_content"></ToggleButton>
     <TextView android:layout_weight="1" android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:id="@+id/textView3" android:layout_height="wrap_content" android:gravity="center_horizontal|bottom" android:text="Author: xcaliburinhand"></TextView>
     <TextView android:text="TextView" android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/textVersion"></TextView>
 </LinearLayout>
