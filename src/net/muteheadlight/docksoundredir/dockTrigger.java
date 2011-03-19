@@ -19,7 +19,6 @@ public class dockTrigger extends Activity{
     	
     	if(dockRedirCentral.imSupported(this)){
 	        setContentView(R.layout.main);
-	        startService(new Intent(this, dockRedirRegisterer.class));
     	} else {
     		Log.i(dockRedirCentral.TAG,"I'm am not supported, exiting!");
     		setContentView(R.layout.unsupported);
@@ -45,8 +44,7 @@ public class dockTrigger extends Activity{
         redir = (ToggleButton)findViewById(R.id.toggleDesk);
         redir.setChecked(deskRedir);
         
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putBoolean("useKernel", dockRedirCentral.useKernel());
+        startService(new Intent(this, dockRedirRegisterer.class));
     }
 
 	protected void onStop() {

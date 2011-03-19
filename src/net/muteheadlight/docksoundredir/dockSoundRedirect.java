@@ -68,6 +68,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
         Intent intentRet = intent1.setAction("com.sec.android.intent.action.INTERNAL_SPEAKER");
     	intentRet = intent1.putExtra("state", enable);
         context.sendBroadcast(intent1);
+        dockRedirCentral.logD("redirecting via ROM");
     }
     
     private void redirectKernel(int enable, Context context){
@@ -93,5 +94,6 @@ public class dockSoundRedirect extends BroadcastReceiver{
 			dockRedirCentral.logD(e.toString());
 		} 
         context.sendStickyBroadcast(intent1); //say a headset has been connected for proper eq
+        dockRedirCentral.logD("redirecting via kernel");
     }
 }

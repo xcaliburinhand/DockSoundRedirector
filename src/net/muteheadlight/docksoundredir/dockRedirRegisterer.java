@@ -27,6 +27,7 @@ public class dockRedirRegisterer extends Service{
      SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
      SharedPreferences.Editor editor = settings.edit();
      editor.putBoolean("useKernel", dockRedirCentral.useKernel());
+     editor.commit();
      
      IntentFilter filter = new IntentFilter(Intent.ACTION_DOCK_EVENT);
      dockSoundRedirect receiver = new dockSoundRedirect();
