@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
-import android.util.Log;
 import android.widget.Toast;
 
 public class dockSoundRedirect extends BroadcastReceiver{
@@ -18,14 +17,14 @@ public class dockSoundRedirect extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent){
 
     	String intentAction = intent.getAction();
-    	Log.i(dockRedirCentral.TAG, "Recieved a message: " .concat(intentAction));
+    	dockRedirCentral.logD("Recieved a message: " .concat(intentAction));
     	SharedPreferences settings = context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
         boolean carRedir = settings.getBoolean("carRedir", true);
         boolean deskRedir = settings.getBoolean("deskRedir", true);
         boolean useKernel = settings.getBoolean("useKernel", false);
     	
     	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0){   
-    		   Log.v(dockRedirCentral.TAG, "Received ACTION_BOOT_COMPLETED");   
+    		   dockRedirCentral.logD("Received ACTION_BOOT_COMPLETED");   
     		   if(dockRedirCentral.imSupported(context))
     			   context.startService(new Intent(context, dockRedirRegisterer.class));
     	 } else {    		   
@@ -60,7 +59,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	        int duration = Toast.LENGTH_SHORT;
 	        Toast toast = Toast.makeText(context, text, duration);
 	        toast.show();
-	        Log.i(dockRedirCentral.TAG, (String)text);	
+	        dockRedirCentral.logD((String)text);	
     	 }
    }
     
@@ -91,7 +90,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	            writer.close();
 	        }
         } catch (IOException e) {
-			Log.v(dockRedirCentral.TAG, e.toString());
+			dockRedirCentral.logD(e.toString());
 		} 
         context.sendStickyBroadcast(intent1); //say a headset has been connected for proper eq
     }

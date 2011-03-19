@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.util.Log;
 
 public class dockRedirRegisterer extends Service{
 	  
@@ -17,13 +16,13 @@ public class dockRedirRegisterer extends Service{
     @Override
     public void onStart(Intent intent, int startId){
      super.onStart(intent, startId);
-     Log.v(dockRedirCentral.TAG, "Dock Sound Redirector Started");
+     dockRedirCentral.logD("Dock Sound Redirector Started");
     }
     
     @Override
     public void onCreate(){
      super.onCreate();
-     Log.v(dockRedirCentral.TAG, "Dock Sound Redirector Created");
+     dockRedirCentral.logD("Dock Sound Redirector Created");
      
      SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
      SharedPreferences.Editor editor = settings.edit();

@@ -7,10 +7,18 @@ import java.io.IOException;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 
 public class dockRedirCentral {
 	public static final String TAG = "dockSoundRedirector";
 	public static final String PREFS_NAME = "prefsDockRedir";
+	
+	public static final void logD(String message) {
+		boolean debuggable = false;
+		
+		if(debuggable)
+			Log.d(TAG, message);
+	}
 	
 	public static final boolean useKernel(){
 		boolean supported = false;

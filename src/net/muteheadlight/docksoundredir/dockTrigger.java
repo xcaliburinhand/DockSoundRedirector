@@ -1,23 +1,13 @@
 package net.muteheadlight.docksoundredir;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
-
 import net.muteheadlight.dockredir.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -57,48 +47,6 @@ public class dockTrigger extends Activity{
         
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putBoolean("useKernel", dockRedirCentral.useKernel());
-        
-        ToggleButton test = new ToggleButton(this);
-        test = (ToggleButton)findViewById(R.id.toggleButton1);
-        test.setOnCheckedChangeListener(new OnCheckedChangeListener()
-        	{
-        	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        		try {
-        		BufferedReader reader = new BufferedReader(new FileReader("/sys/devices/virtual/misc/dockredir/dockredir_support"), 256);
-                try {
-                    if (reader.readLine().contains("1"))
-                    	Log.v(dockRedirCentral.TAG, "kernel supported");
-                } finally {
-                    reader.close();
-                }} catch (IOException e) {
-					Log.v(dockRedirCentral.TAG, "unsupported");
-				} 
-        		
-        		Intent intent1 = new Intent(Intent.ACTION_HEADSET_PLUG);
-                intent1.putExtra("name", "h2w");
-                intent1.putExtra("microphone", 0);
-                
-                int state = (isChecked)?1:0;
-                                
-                if (!isChecked) {            	
-                	Intent intent = new Intent(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
-                    sendBroadcast(intent);
-                }
-                
-                try {
-                    BufferedWriter writer = new BufferedWriter(new FileWriter("/sys/devices/virtual/misc/dockredir/usedock"));
-				try {
-					writer.write(Integer.toString(state));
-					intent1.putExtra("state", state);
-				}
-                finally {
-                    writer.close();
-                }} catch (IOException e) {
-					Log.v(dockRedirCentral.TAG, e.toString());
-				} 
-                sendStickyBroadcast(intent1);
-        	}}
-            );
     }
 
 	protected void onStop() {
