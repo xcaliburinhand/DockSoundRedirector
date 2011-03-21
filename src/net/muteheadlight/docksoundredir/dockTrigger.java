@@ -9,7 +9,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.ToggleButton;
+import android.widget.CheckBox;
 
 public class dockTrigger extends Activity{
 	dockSoundRedirect receiver;
@@ -26,7 +26,7 @@ public class dockTrigger extends Activity{
     	}
 
         TextView ver=new TextView(this);
-        ver=(TextView)findViewById(R.id.textVersion); 
+        ver=(TextView)findViewById(R.id.widget33); 
         try {
         	PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(),0);
         	ver.setText("Version: "+ packageInfo.versionName);
@@ -38,10 +38,10 @@ public class dockTrigger extends Activity{
         boolean carRedir = settings.getBoolean("carRedir", true);
         boolean deskRedir = settings.getBoolean("deskRedir", true);
         
-        ToggleButton redir = new ToggleButton(this);
-        redir = (ToggleButton)findViewById(R.id.toggleCar);
+        CheckBox redir = new CheckBox(this);
+        redir = (CheckBox)findViewById(R.id.widget31);
         redir.setChecked(carRedir);
-        redir = (ToggleButton)findViewById(R.id.toggleDesk);
+        redir = (CheckBox)findViewById(R.id.widget32);
         redir.setChecked(deskRedir);
         
         startService(new Intent(this, dockRedirRegisterer.class));
@@ -51,10 +51,10 @@ public class dockTrigger extends Activity{
     	super.onStop();
     	
     	if(dockRedirCentral.imSupported(this)){
-	        ToggleButton redir = new ToggleButton(this);
-	        redir = (ToggleButton)findViewById(R.id.toggleCar);
+	        CheckBox redir = new CheckBox(this);
+	        redir = (CheckBox)findViewById(R.id.widget31);
 	        boolean carRedir  = redir.isChecked();
-	        redir = (ToggleButton)findViewById(R.id.toggleDesk);
+	        redir = (CheckBox)findViewById(R.id.widget32);
 	        boolean deskRedir = redir.isChecked();
 	    	
 	        SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
