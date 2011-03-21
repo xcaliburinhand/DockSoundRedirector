@@ -1,15 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" android:orientation="vertical">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/linearLayout1">
-        <ToggleButton android:layout_width="wrap_content" android:text="ToggleButton" android:layout_height="wrap_content" android:id="@+id/toggleCar"></ToggleButton>
-        <TextView android:layout_width="wrap_content" android:id="@+id/textView2" android:layout_height="wrap_content" android:text="Redirect Audio Output with Car Dock"></TextView>
-    </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/linearLayout2">
-        <ToggleButton android:layout_width="wrap_content" android:text="ToggleButton" android:layout_height="wrap_content" android:id="@+id/toggleDesk"></ToggleButton>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/textView1" android:text="Redirect Audio Output with Desk Dock"></TextView>
-    </LinearLayout>
-    <TextView android:layout_weight="1" android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:id="@+id/textView3" android:layout_height="wrap_content" android:gravity="center_horizontal|bottom" android:text="Author: xcaliburinhand"></TextView>
-    <TextView android:text="TextView" android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/textVersion"></TextView>
-</LinearLayout>
+<AbsoluteLayout
+android:id="@+id/widget0"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+<RelativeLayout
+android:id="@+id/widget30"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_x="0px"
+android:layout_y="1px"
+>
+</RelativeLayout>
+
+
+<TextView
+android:id="@+id/widget35"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="By xcaliburinhand"
+android:textColor="#ff666666"
+android:layout_x="160px"
+android:layout_y="640px"
+>
+</TextView>
+<TextView
+android:id="@+id/widget36"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="UI by ytt3r"
+android:textColor="#ff666666"
+android:layout_x="195px"
+android:layout_y="665px"
+>
+</TextView>
+<TextView
+android:id="@id/widget33"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Version 2.0"
+android:textColor="#ff666666"
+android:layout_x="193px"
+android:layout_y="690px"
+>
+</TextView>
+
+<CheckBox android:layout_height="wrap_content" android:id="@+id/widget31" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through car dock" android:layout_x="20dip" android:layout_y="156dip"></CheckBox>
+
+
+<CheckBox android:layout_height="wrap_content" android:id="@+id/widget32" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through desk dock" android:layout_x="18dip" android:layout_y="280dip"></CheckBox>
+
+</AbsoluteLayout>
