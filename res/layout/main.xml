@@ -22,7 +22,7 @@ android:layout_height="wrap_content"
 android:text="By xcaliburinhand"
 android:textColor="#ff666666"
 android:layout_x="160px"
-android:layout_y="640px"
+android:layout_y="590px"
 >
 </TextView>
 <TextView
@@ -32,23 +32,23 @@ android:layout_height="wrap_content"
 android:text="UI by ytt3r"
 android:textColor="#ff666666"
 android:layout_x="195px"
-android:layout_y="665px"
+android:layout_y="615px"
 >
 </TextView>
 <TextView
-android:id="@id/widget33"
+android:id="@+id/widget33"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="Version 2.0"
 android:textColor="#ff666666"
 android:layout_x="193px"
-android:layout_y="690px"
+android:layout_y="640px"
 >
 </TextView>
 
-<CheckBox android:layout_height="wrap_content" android:id="@+id/widget31" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through car dock" android:layout_x="20dip" android:layout_y="156dip"></CheckBox>
+<CheckBox android:layout_height="wrap_content" android:id="@+id/widget31" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through car dock" android:layout_x="20dip" android:layout_y="106dip"></CheckBox>
 
 
-<CheckBox android:layout_height="wrap_content" android:id="@+id/widget32" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through desk dock" android:layout_x="18dip" android:layout_y="280dip"></CheckBox>
+<CheckBox android:layout_height="wrap_content" android:id="@+id/widget32" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through desk dock" android:layout_x="18dip" android:layout_y="230dip"></CheckBox>
 
 </AbsoluteLayout>
