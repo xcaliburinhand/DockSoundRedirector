@@ -22,6 +22,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
         boolean carRedir = settings.getBoolean("carRedir", true);
         boolean deskRedir = settings.getBoolean("deskRedir", true);
         boolean useKernel = settings.getBoolean("useKernel", false);
+        boolean _docked = settings.getBoolean("_docked", false);
     	
     	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0){   
     		   dockRedirCentral.logD("Received ACTION_BOOT_COMPLETED");   
@@ -29,8 +30,16 @@ public class dockSoundRedirect extends BroadcastReceiver{
     			   context.startService(new Intent(context, dockRedirRegisterer.class));
     	 } else {    		   
 	    	int dockstate = intent.getIntExtra("android.intent.extra.DOCK_STATE", 0);
+	    	
+	    	//Logic to prevent being triggered by rebroadcast
+	    	if((dockstate == 1 || dockstate == 2) && _docked)
+	    		return;
+	    	
+	    	if(dockstate == 0 && !_docked)
+	    		return;
 
 	        CharSequence text = "Dock Audio Redirection Disabled";
+	        SharedPreferences.Editor editor = settings.edit();
 	        
 	    	if (dockstate == 2){
 	    		if (carRedir){
@@ -39,6 +48,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    			else
 	    				redirectSamsung(1, context);    
 	        		text = "Audio Routed to Dock!";
+	        		editor.putBoolean("_docked", true);
 	    		}
 	    	} else if (dockstate == 1) {
 	    		if (deskRedir){
@@ -47,6 +57,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    			else
 	    				redirectSamsung(1, context);    
 		        	text = "Audio Routed to Dock!";
+		        	editor.putBoolean("_docked", true);
 	    		}
 	    	} else {
 	    		if (useKernel)
@@ -54,11 +65,13 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    		else
 	    			redirectSamsung(0, context);
 	            text = "Audio Routed Normal.";
+	            editor.putBoolean("_docked", false);
 	    	}
 	
 	        int duration = Toast.LENGTH_SHORT;
 	        Toast toast = Toast.makeText(context, text, duration);
 	        toast.show();
+	        editor.commit();
 	        dockRedirCentral.logD((String)text);	
     	 }
    }
