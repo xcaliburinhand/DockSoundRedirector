@@ -51,11 +51,7 @@ android:layout_y="66px"
 
 
 
-<CheckBox android:layout_height="wrap_content" android:id="@+id/widget31" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through car dock" android:layout_x="130dip" android:layout_y="140dip"></CheckBox>
-
-
-
-
-
-<CheckBox android:layout_height="wrap_content" android:id="@+id/widget32" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through desk dock" android:layout_x="130dip" android:layout_y="190dip"></CheckBox>
+<CheckBox android:layout_height="wrap_content" android:id="@+id/widget31" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through car dock" android:layout_x="130dip" android:layout_y="100dip"></CheckBox>
+<CheckBox android:layout_height="wrap_content" android:id="@+id/widget32" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through desk dock" android:layout_x="130dip" android:layout_y="150dip"></CheckBox>
+<CheckBox android:layout_height="wrap_content" android:id="@+id/widgetNote" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Show redirect notification" android:layout_x="130dip" android:layout_y="200dip"></CheckBox>
 </AbsoluteLayout>

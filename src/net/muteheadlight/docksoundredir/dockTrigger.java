@@ -37,12 +37,15 @@ public class dockTrigger extends Activity{
         SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
         boolean carRedir = settings.getBoolean("carRedir", true);
         boolean deskRedir = settings.getBoolean("deskRedir", true);
+        boolean showToast = settings.getBoolean("showToast", true);
         
         CheckBox redir = new CheckBox(this);
         redir = (CheckBox)findViewById(R.id.widget31);
         redir.setChecked(carRedir);
         redir = (CheckBox)findViewById(R.id.widget32);
         redir.setChecked(deskRedir);
+        redir = (CheckBox)findViewById(R.id.widgetNote);
+        redir.setChecked(showToast);
         
         startService(new Intent(this, dockRedirRegisterer.class));
     }
@@ -56,11 +59,14 @@ public class dockTrigger extends Activity{
 	        boolean carRedir  = redir.isChecked();
 	        redir = (CheckBox)findViewById(R.id.widget32);
 	        boolean deskRedir = redir.isChecked();
+	        redir = (CheckBox)findViewById(R.id.widgetNote);
+	        boolean showToast = redir.isChecked();
 	    	
 	        SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
 	        SharedPreferences.Editor editor = settings.edit();
 	        editor.putBoolean("deskRedir", deskRedir);
 	        editor.putBoolean("carRedir", carRedir);
+	        editor.putBoolean("showToast", showToast);
 	
 	        // Commit the edits!
 	        editor.commit();

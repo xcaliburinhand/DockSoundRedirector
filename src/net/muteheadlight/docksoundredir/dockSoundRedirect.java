@@ -22,6 +22,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
         boolean carRedir = settings.getBoolean("carRedir", true);
         boolean deskRedir = settings.getBoolean("deskRedir", true);
         boolean useKernel = settings.getBoolean("useKernel", false);
+        boolean showToast = settings.getBoolean("showToast", true);
         boolean _docked = settings.getBoolean("_docked", false);
     	
     	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0){   
@@ -69,8 +70,10 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    	}
 	
 	        int duration = Toast.LENGTH_SHORT;
-	        Toast toast = Toast.makeText(context, text, duration);
-	        toast.show();
+	        if(showToast){
+	        	Toast toast = Toast.makeText(context, text, duration);
+	        	toast.show();
+	        }
 	        editor.commit();
 	        dockRedirCentral.logD((String)text);	
     	 }
