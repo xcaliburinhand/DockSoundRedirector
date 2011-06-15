@@ -1,10 +1,12 @@
 package net.muteheadlight.docksoundredir;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.os.PowerManager;
 
 public class dockRedirRegisterer extends Service{
 	  
@@ -32,5 +34,8 @@ public class dockRedirRegisterer extends Service{
      IntentFilter filter = new IntentFilter(Intent.ACTION_DOCK_EVENT);
      dockSoundRedirect receiver = new dockSoundRedirect();
      registerReceiver(receiver, filter);
+     
+     final PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
+     dockRedirCentral.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, dockRedirCentral.TAG);
    }
 }

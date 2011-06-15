@@ -7,11 +7,13 @@ import java.io.IOException;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.PowerManager;
 import android.util.Log;
 
 public class dockRedirCentral {
 	public static final String TAG = "dockSoundRedirector";
 	public static final String PREFS_NAME = "prefsDockRedir";
+	protected static PowerManager.WakeLock mWakeLock;
 	
 	public static final void logD(String message) {
 		boolean debuggable = false;

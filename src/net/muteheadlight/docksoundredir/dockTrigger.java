@@ -20,7 +20,7 @@ public class dockTrigger extends Activity{
     	if(dockRedirCentral.imSupported(this)){
 	        setContentView(R.layout.main);
     	} else {
-    		Log.i(dockRedirCentral.TAG,"I'm am not supported, exiting!");
+    		Log.i(dockRedirCentral.TAG,"I am not supported, exiting!");
     		setContentView(R.layout.unsupported);
     		return;
     	}
@@ -38,6 +38,7 @@ public class dockTrigger extends Activity{
         boolean carRedir = settings.getBoolean("carRedir", true);
         boolean deskRedir = settings.getBoolean("deskRedir", true);
         boolean showToast = settings.getBoolean("showToast", true);
+        boolean screenOn = settings.getBoolean("screenOn", false);
         
         CheckBox redir = new CheckBox(this);
         redir = (CheckBox)findViewById(R.id.widget31);
@@ -46,6 +47,8 @@ public class dockTrigger extends Activity{
         redir.setChecked(deskRedir);
         redir = (CheckBox)findViewById(R.id.widgetNote);
         redir.setChecked(showToast);
+        redir = (CheckBox)findViewById(R.id.widgetScreen);
+        redir.setChecked(screenOn);
         
         startService(new Intent(this, dockRedirRegisterer.class));
     }
@@ -61,13 +64,16 @@ public class dockTrigger extends Activity{
 	        boolean deskRedir = redir.isChecked();
 	        redir = (CheckBox)findViewById(R.id.widgetNote);
 	        boolean showToast = redir.isChecked();
+	        redir = (CheckBox)findViewById(R.id.widgetScreen);
+	        boolean screenOn = redir.isChecked();
 	    	
 	        SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
 	        SharedPreferences.Editor editor = settings.edit();
 	        editor.putBoolean("deskRedir", deskRedir);
 	        editor.putBoolean("carRedir", carRedir);
 	        editor.putBoolean("showToast", showToast);
-	
+	        editor.putBoolean("screenOn", screenOn);
+	        
 	        // Commit the edits!
 	        editor.commit();
     	}

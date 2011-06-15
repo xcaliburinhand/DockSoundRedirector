@@ -12,7 +12,8 @@ import android.media.AudioManager;
 import android.widget.Toast;
 
 public class dockSoundRedirect extends BroadcastReceiver{
-	    
+	
+		    
     @Override 
     public void onReceive(Context context, Intent intent){
 
@@ -24,6 +25,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
         boolean useKernel = settings.getBoolean("useKernel", false);
         boolean showToast = settings.getBoolean("showToast", true);
         boolean _docked = settings.getBoolean("_docked", false);
+        boolean screenOn = settings.getBoolean("screenOn", false);
     	
     	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0){   
     		   dockRedirCentral.logD("Received ACTION_BOOT_COMPLETED");   
@@ -47,7 +49,9 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    			if (useKernel)
 	    				redirectKernel(1,context);
 	    			else
-	    				redirectSamsung(1, context);    
+	    				redirectSamsung(1, context);
+	    			if (screenOn)
+	    				dockRedirCentral.mWakeLock.acquire();
 	        		text = "Audio Routed to Dock!";
 	        		editor.putBoolean("_docked", true);
 	    		}
@@ -56,7 +60,9 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    			if (useKernel)
 	    				redirectKernel(1, context);
 	    			else
-	    				redirectSamsung(1, context);    
+	    				redirectSamsung(1, context);
+	    			if (screenOn)
+	    				dockRedirCentral.mWakeLock.acquire();
 		        	text = "Audio Routed to Dock!";
 		        	editor.putBoolean("_docked", true);
 	    		}
@@ -65,6 +71,8 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    			redirectKernel(0, context);
 	    		else
 	    			redirectSamsung(0, context);
+	    		if (screenOn)
+    				dockRedirCentral.mWakeLock.release();
 	            text = "Audio Routed Normal.";
 	            editor.putBoolean("_docked", false);
 	    	}
