@@ -26,6 +26,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
         boolean showToast = settings.getBoolean("showToast", true);
         boolean _docked = settings.getBoolean("_docked", false);
         boolean screenOn = settings.getBoolean("screenOn", false);
+        int mediaVolume = settings.getInt("mediaVolume", -1);
     	
     	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0){   
     		   dockRedirCentral.logD("Received ACTION_BOOT_COMPLETED");   
@@ -44,27 +45,22 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	        CharSequence text = "Dock Audio Redirection Disabled";
 	        SharedPreferences.Editor editor = settings.edit();
 	        
-	    	if (dockstate == 2){
-	    		if (carRedir){
+	    	if (dockstate > 0){
+	    		if ((dockstate == 2 & carRedir) || (dockstate == 1 && deskRedir)){
 	    			if (useKernel)
 	    				redirectKernel(1,context);
 	    			else
 	    				redirectSamsung(1, context);
 	    			if (screenOn)
 	    				dockRedirCentral.mWakeLock.acquire();
+	    			if (!(mediaVolume == -1)) {
+	    				AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+	    				editor.putInt("mediaVolume",audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+	    				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),AudioManager.FLAG_SHOW_UI);
+	    			}
+	    				
 	        		text = "Audio Routed to Dock!";
 	        		editor.putBoolean("_docked", true);
-	    		}
-	    	} else if (dockstate == 1) {
-	    		if (deskRedir){
-	    			if (useKernel)
-	    				redirectKernel(1, context);
-	    			else
-	    				redirectSamsung(1, context);
-	    			if (screenOn)
-	    				dockRedirCentral.mWakeLock.acquire();
-		        	text = "Audio Routed to Dock!";
-		        	editor.putBoolean("_docked", true);
 	    		}
 	    	} else {
 	    		if (useKernel)
@@ -73,6 +69,10 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    			redirectSamsung(0, context);
 	    		if (screenOn)
     				dockRedirCentral.mWakeLock.release();
+    			if (!(mediaVolume == -1)) {
+    				AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+    				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,mediaVolume,AudioManager.FLAG_SHOW_UI);
+    			}
 	            text = "Audio Routed Normal.";
 	            editor.putBoolean("_docked", false);
 	    	}

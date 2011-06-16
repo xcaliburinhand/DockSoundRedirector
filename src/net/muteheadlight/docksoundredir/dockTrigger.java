@@ -39,6 +39,7 @@ public class dockTrigger extends Activity{
         boolean deskRedir = settings.getBoolean("deskRedir", true);
         boolean showToast = settings.getBoolean("showToast", true);
         boolean screenOn = settings.getBoolean("screenOn", false);
+        int mediaVolume = settings.getInt("mediaVolume", -1);
         
         CheckBox redir = new CheckBox(this);
         redir = (CheckBox)findViewById(R.id.widget31);
@@ -49,6 +50,11 @@ public class dockTrigger extends Activity{
         redir.setChecked(showToast);
         redir = (CheckBox)findViewById(R.id.widgetScreen);
         redir.setChecked(screenOn);
+        redir = (CheckBox)findViewById(R.id.widgetMaxVol);
+        if (mediaVolume == -1)
+        	redir.setChecked(false);
+        else
+        	redir.setChecked(true);
         
         startService(new Intent(this, dockRedirRegisterer.class));
     }
@@ -73,6 +79,11 @@ public class dockTrigger extends Activity{
 	        editor.putBoolean("carRedir", carRedir);
 	        editor.putBoolean("showToast", showToast);
 	        editor.putBoolean("screenOn", screenOn);
+	        redir = (CheckBox)findViewById(R.id.widgetMaxVol);
+	        if(redir.isChecked())
+	        	editor.putInt("mediaVolume", 0);
+	        else
+	        	editor.putInt("mediaVolume", -1);
 	        
 	        // Commit the edits!
 	        editor.commit();

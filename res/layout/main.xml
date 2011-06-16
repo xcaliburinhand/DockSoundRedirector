@@ -46,8 +46,9 @@ android:layout_y="715px"
 >
 </TextView>
 
-<CheckBox android:layout_height="wrap_content" android:id="@+id/widget31" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through car dock" android:layout_x="20dip" android:layout_y="80dip"></CheckBox>
-<CheckBox android:layout_height="wrap_content" android:id="@+id/widget32" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through desk dock" android:layout_x="20dip" android:layout_y="160dip"></CheckBox>
-<CheckBox android:layout_height="wrap_content" android:id="@+id/widgetNote" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Show redirect notification" android:layout_x="20dip" android:layout_y="240dip"></CheckBox>
-<CheckBox android:checked="false" android:layout_height="wrap_content" android:textColor="#ff666666" android:text="Keep screen on when docked" android:id="@+id/widgetScreen" android:layout_width="wrap_content" android:layout_x="20dp" android:layout_y="320dp"></CheckBox>
+<CheckBox android:layout_height="wrap_content" android:id="@+id/widget31" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through car dock" android:layout_x="20dip" android:layout_y="60dip"></CheckBox>
+<CheckBox android:layout_height="wrap_content" android:id="@+id/widget32" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Redirect audio through desk dock" android:layout_x="20dip" android:layout_y="130dip"></CheckBox>
+<CheckBox android:layout_height="wrap_content" android:id="@+id/widgetNote" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Show redirect notification" android:layout_x="20dip" android:layout_y="200dip"></CheckBox>
+<CheckBox android:checked="false" android:layout_height="wrap_content" android:textColor="#ff666666" android:text="Keep screen on when docked" android:id="@+id/widgetScreen" android:layout_width="wrap_content" android:layout_x="20dp" android:layout_y="270dp"></CheckBox>
+<CheckBox android:checked="false" android:layout_height="wrap_content" android:textColor="#ff666666" android:text="Maximize volume when docked" android:id="@+id/widgetMaxVol" android:layout_width="wrap_content" android:layout_x="20dp" android:layout_y="340dp"></CheckBox>
 </AbsoluteLayout>
