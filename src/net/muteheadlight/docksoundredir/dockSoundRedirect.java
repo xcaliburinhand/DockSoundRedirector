@@ -67,8 +67,10 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    			redirectKernel(0, context);
 	    		else
 	    			redirectSamsung(0, context);
-	    		if (screenOn)
-    				dockRedirCentral.mWakeLock.release();
+	    		if (screenOn){
+	    			if(dockRedirCentral.mWakeLock.isHeld())
+	    				dockRedirCentral.mWakeLock.release();
+	    		}
     			if (!(mediaVolume == -1)) {
     				AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
     				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,mediaVolume,AudioManager.FLAG_SHOW_UI);
