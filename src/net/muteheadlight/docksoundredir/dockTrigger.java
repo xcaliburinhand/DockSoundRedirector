@@ -8,8 +8,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.CheckBox;
+import android.widget.ToggleButton;
 
 public class dockTrigger extends Activity{
 	dockSoundRedirect receiver;
@@ -32,31 +35,24 @@ public class dockTrigger extends Activity{
         	ver.setText("Version: "+ packageInfo.versionName);
         } catch (NameNotFoundException e) {
         	ver.setText("Version: unknown");
-        }
-        
-        SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
-        boolean carRedir = settings.getBoolean("carRedir", true);
-        boolean deskRedir = settings.getBoolean("deskRedir", true);
-        boolean showToast = settings.getBoolean("showToast", true);
-        boolean screenOn = settings.getBoolean("screenOn", false);
-        int mediaVolume = settings.getInt("mediaVolume", -1);
-        
-        CheckBox redir = new CheckBox(this);
-        redir = (CheckBox)findViewById(R.id.widget31);
-        redir.setChecked(carRedir);
-        redir = (CheckBox)findViewById(R.id.widget32);
-        redir.setChecked(deskRedir);
-        redir = (CheckBox)findViewById(R.id.widgetNote);
-        redir.setChecked(showToast);
-        redir = (CheckBox)findViewById(R.id.widgetScreen);
-        redir.setChecked(screenOn);
-        redir = (CheckBox)findViewById(R.id.widgetMaxVol);
-        if (mediaVolume == -1)
-        	redir.setChecked(false);
-        else
-        	redir.setChecked(true);
+        }        
         
         startService(new Intent(this, dockRedirRegisterer.class));
+        
+        final ToggleButton redir1 = (ToggleButton)findViewById(R.id.toggleRedir);
+        redir1.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on clicks
+            	Intent intent1 = new Intent();
+                Intent intentRet = intent1.setAction("net.muteheadlight.docksoundredir.intent.action.REDIRECT");
+                if (redir1.isChecked()) {
+                	intentRet = intent1.putExtra("android.intent.extra.DOCK_STATE", 1);
+                } else {
+                	intentRet = intent1.putExtra("android.intent.extra.DOCK_STATE", 0);
+                }
+                sendBroadcast(intent1);
+            }
+        });
     }
 
 	protected void onStop() {
@@ -89,4 +85,35 @@ public class dockTrigger extends Activity{
 	        editor.commit();
     	}
     }
+	
+	protected void onResume() {
+		super.onStart();
+		
+        SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
+        boolean carRedir = settings.getBoolean("carRedir", true);
+        boolean deskRedir = settings.getBoolean("deskRedir", true);
+        boolean showToast = settings.getBoolean("showToast", true);
+        boolean screenOn = settings.getBoolean("screenOn", false);
+        boolean _docked = settings.getBoolean("_docked", false);
+        boolean _redirected = settings.getBoolean("_redirected", false);
+        int mediaVolume = settings.getInt("mediaVolume", -1);
+        
+        CheckBox redir = new CheckBox(this);
+        redir = (CheckBox)findViewById(R.id.widget31);
+        redir.setChecked(carRedir);
+        redir = (CheckBox)findViewById(R.id.widget32);
+        redir.setChecked(deskRedir);
+        redir = (CheckBox)findViewById(R.id.widgetNote);
+        redir.setChecked(showToast);
+        redir = (CheckBox)findViewById(R.id.widgetScreen);
+        redir.setChecked(screenOn);
+        redir = (CheckBox)findViewById(R.id.widgetMaxVol);
+        if (mediaVolume == -1)
+        	redir.setChecked(false);
+        else
+        	redir.setChecked(true);
+        final ToggleButton redir1 = (ToggleButton)findViewById(R.id.toggleRedir);
+        redir1.setEnabled(_docked);
+        redir1.setChecked(_redirected);
+	}
 }

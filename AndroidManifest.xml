@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="net.muteheadlight.dockredir"
-      android:versionName="1.5" android:versionCode="6">
+      android:versionName="1.6" android:versionCode="7">
 <uses-sdk android:targetSdkVersion="8" android:minSdkVersion="8"></uses-sdk>
 <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
 <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
@@ -11,6 +11,7 @@
                     <intent-filter>
                 <category android:name="android.intent.category.CAR_DOCK" />
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="net.muteheadlight.docksoundredir.intent.action.REDIRECT"></action>
             </intent-filter>
         </receiver>
         <activity android:name="net.muteheadlight.docksoundredir.dockTrigger">

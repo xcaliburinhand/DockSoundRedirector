@@ -32,11 +32,12 @@ public class dockSoundRedirect extends BroadcastReceiver{
     		   dockRedirCentral.logD("Received ACTION_BOOT_COMPLETED");   
     		   if(dockRedirCentral.imSupported(context))
     			   context.startService(new Intent(context, dockRedirRegisterer.class));
-    	 } else {    		   
+    	 } else {
 	    	int dockstate = intent.getIntExtra("android.intent.extra.DOCK_STATE", 0);
+	    	dockRedirCentral.logD("_docked " .concat(String.valueOf(_docked)));
 	    	
 	    	//Logic to prevent being triggered by rebroadcast
-	    	if((dockstate == 1 || dockstate == 2) && _docked)
+	    	if((dockstate == 1 || dockstate == 2) && _docked && (intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0))
 	    		return;
 	    	
 	    	if(dockstate == 0 && !_docked)
@@ -46,7 +47,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	        SharedPreferences.Editor editor = settings.edit();
 	        
 	    	if (dockstate > 0){
-	    		if ((dockstate == 2 & carRedir) || (dockstate == 1 && deskRedir)){
+	    		if ((dockstate == 2 & carRedir) || (dockstate == 1 && deskRedir) || (intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") == 0)){
 	    			if (useKernel)
 	    				redirectKernel(1,context);
 	    			else
@@ -60,9 +61,17 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    			}
 	    				
 	        		text = "Audio Routed to Dock!";
-	        		editor.putBoolean("_docked", true);
+	        		if(intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0)
+	        			editor.putBoolean("_docked", true);
+	        		editor.putBoolean("_redirected", true);
 	    		}
 	    	} else {
+	            if(intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0) {
+        			editor.putBoolean("_docked", false);           	
+        	        Intent intent1 = new Intent(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        	        context.sendBroadcast(intent1);
+	            }
+	            
 	    		if (useKernel)
 	    			redirectKernel(0, context);
 	    		else
@@ -76,7 +85,8 @@ public class dockSoundRedirect extends BroadcastReceiver{
     				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,mediaVolume,AudioManager.FLAG_SHOW_UI);
     			}
 	            text = "Audio Routed Normal.";
-	            editor.putBoolean("_docked", false);
+
+	            editor.putBoolean("_redirected", false);
 	    	}
 	
 	        int duration = Toast.LENGTH_SHORT;
@@ -97,12 +107,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
         dockRedirCentral.logD("redirecting via ROM");
     }
     
-    private void redirectKernel(int enable, Context context){
-    	if (enable == 0) {            	
-        	Intent intent = new Intent(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
-            context.sendBroadcast(intent);
-        }
-        
+    private void redirectKernel(int enable, Context context){     
     	Intent intent1 = new Intent(Intent.ACTION_HEADSET_PLUG);
         intent1.putExtra("name", "h2w");
         intent1.putExtra("microphone", 0);

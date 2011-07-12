@@ -56,4 +56,6 @@ android:layout_y="66px"
 <CheckBox android:layout_height="wrap_content" android:id="@+id/widgetNote" android:layout_width="wrap_content" android:textColor="#ff666666" android:checked="true" android:text="Show redirect notification" android:layout_x="130dip" android:layout_y="155dip"></CheckBox>
 <CheckBox android:checked="false" android:layout_height="wrap_content" android:textColor="#ff666666" android:text="Keep screen on when docked" android:id="@+id/widgetScreen" android:layout_width="wrap_content" android:layout_x="130dp" android:layout_y="195dp"></CheckBox>
 <CheckBox android:checked="false" android:layout_height="wrap_content" android:textColor="#ff666666" android:text="Maximize volume when docked" android:id="@+id/widgetMaxVol" android:layout_width="wrap_content" android:layout_x="130dp" android:layout_y="235dp"></CheckBox>
+<ToggleButton android:layout_width="wrap_content" android:layout_x="17dp" android:text="ToggleButton" android:layout_height="wrap_content" android:id="@+id/toggleRedir" android:layout_y="14dp"></ToggleButton>
+<TextView android:layout_width="wrap_content" android:layout_x="12dp" android:layout_height="wrap_content" android:id="@+id/textView1" android:text="Redirection" android:layout_y="56dp"></TextView>
 </AbsoluteLayout>
