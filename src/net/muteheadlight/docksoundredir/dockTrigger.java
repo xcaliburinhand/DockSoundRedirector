@@ -89,31 +89,33 @@ public class dockTrigger extends Activity{
 	protected void onResume() {
 		super.onStart();
 		
-        SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
-        boolean carRedir = settings.getBoolean("carRedir", true);
-        boolean deskRedir = settings.getBoolean("deskRedir", true);
-        boolean showToast = settings.getBoolean("showToast", true);
-        boolean screenOn = settings.getBoolean("screenOn", false);
-        boolean _docked = settings.getBoolean("_docked", false);
-        boolean _redirected = settings.getBoolean("_redirected", false);
-        int mediaVolume = settings.getInt("mediaVolume", -1);
-        
-        CheckBox redir = new CheckBox(this);
-        redir = (CheckBox)findViewById(R.id.widget31);
-        redir.setChecked(carRedir);
-        redir = (CheckBox)findViewById(R.id.widget32);
-        redir.setChecked(deskRedir);
-        redir = (CheckBox)findViewById(R.id.widgetNote);
-        redir.setChecked(showToast);
-        redir = (CheckBox)findViewById(R.id.widgetScreen);
-        redir.setChecked(screenOn);
-        redir = (CheckBox)findViewById(R.id.widgetMaxVol);
-        if (mediaVolume == -1)
-        	redir.setChecked(false);
-        else
-        	redir.setChecked(true);
-        final ToggleButton redir1 = (ToggleButton)findViewById(R.id.toggleRedir);
-        redir1.setEnabled(_docked);
-        redir1.setChecked(_redirected);
+		if(dockRedirCentral.imSupported(this)){
+	        SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
+	        boolean carRedir = settings.getBoolean("carRedir", true);
+	        boolean deskRedir = settings.getBoolean("deskRedir", true);
+	        boolean showToast = settings.getBoolean("showToast", true);
+	        boolean screenOn = settings.getBoolean("screenOn", false);
+	        boolean _docked = settings.getBoolean("_docked", false);
+	        boolean _redirected = settings.getBoolean("_redirected", false);
+	        int mediaVolume = settings.getInt("mediaVolume", -1);
+	        
+	        CheckBox redir = new CheckBox(this);
+	        redir = (CheckBox)findViewById(R.id.widget31);
+	        redir.setChecked(carRedir);
+	        redir = (CheckBox)findViewById(R.id.widget32);
+	        redir.setChecked(deskRedir);
+	        redir = (CheckBox)findViewById(R.id.widgetNote);
+	        redir.setChecked(showToast);
+	        redir = (CheckBox)findViewById(R.id.widgetScreen);
+	        redir.setChecked(screenOn);
+	        redir = (CheckBox)findViewById(R.id.widgetMaxVol);
+	        if (mediaVolume == -1)
+	        	redir.setChecked(false);
+	        else
+	        	redir.setChecked(true);
+	        final ToggleButton redir1 = (ToggleButton)findViewById(R.id.toggleRedir);
+	        redir1.setEnabled(_docked);
+	        redir1.setChecked(_redirected);
+		}
 	}
 }
