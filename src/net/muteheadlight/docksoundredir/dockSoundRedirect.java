@@ -1,9 +1,11 @@
+//Licensed under GPLv3
+
 package net.muteheadlight.docksoundredir;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.lang.reflect.Method;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.Context;
@@ -13,7 +15,8 @@ import android.widget.Toast;
 
 public class dockSoundRedirect extends BroadcastReceiver{
 	
-		    
+	private static final int DEVICE_OUT_WIRED_HEADPHONE = 0x8;    
+	
     @Override 
     public void onReceive(Context context, Intent intent){
 
@@ -124,7 +127,27 @@ public class dockSoundRedirect extends BroadcastReceiver{
         } catch (IOException e) {
 			dockRedirCentral.logD(e.toString());
 		} 
-        context.sendStickyBroadcast(intent1); //say a headset has been connected for proper eq
+        setDeviceConnectionState(DEVICE_OUT_WIRED_HEADPHONE, enable, "");
         dockRedirCentral.logD("redirecting via kernel");
+    }
+    
+    // The following is a grab from Dan Walkes toggleheadset2 - http://code.google.com/p/toggleheadset2/
+    /**
+     * set device connection state through reflection for Android 2.1, 2.2, 2.3 - 4.0 - later?
+     * Thanks Adam King!
+     * @param device
+     * @param state
+     * @param address
+     */
+    private void setDeviceConnectionState(final int device, final int state, final String address) {
+        try {
+            Class<?> audioSystem = Class.forName("android.media.AudioSystem");
+            Method setDeviceConnectionState = audioSystem.getMethod(
+                    "setDeviceConnectionState", int.class, int.class, String.class);
+
+            setDeviceConnectionState.invoke(audioSystem, device, state, address);
+        } catch (Exception e) {
+            dockRedirCentral.logD("setDeviceConnectionState failed: " + e);
+        }
     }
 }

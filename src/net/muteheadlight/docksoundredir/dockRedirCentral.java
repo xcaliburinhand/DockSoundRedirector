@@ -1,3 +1,5 @@
+//Licensed under GPLv3
+
 package net.muteheadlight.docksoundredir;
 
 import java.io.BufferedReader;
@@ -14,10 +16,9 @@ public class dockRedirCentral {
 	public static final String TAG = "dockSoundRedirector";
 	public static final String PREFS_NAME = "prefsDockRedir";
 	protected static PowerManager.WakeLock mWakeLock;
+	private static boolean debuggable = false;
 	
 	public static final void logD(String message) {
-		boolean debuggable = false;
-		
 		if(debuggable)
 			Log.d(TAG, message);
 	}
@@ -61,6 +62,7 @@ public class dockRedirCentral {
         } catch (PackageManager.NameNotFoundException e) {
             	supported = false;
         }
+          
         return supported;
 	}
 }

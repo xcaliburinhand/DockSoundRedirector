@@ -1,3 +1,5 @@
+//Licensed under GPLv3
+
 package net.muteheadlight.docksoundredir;
 
 import net.muteheadlight.dockredir.R;
