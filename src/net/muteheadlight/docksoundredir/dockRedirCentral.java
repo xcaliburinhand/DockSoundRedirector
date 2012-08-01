@@ -16,7 +16,7 @@ public class dockRedirCentral {
 	public static final String TAG = "dockSoundRedirector";
 	public static final String PREFS_NAME = "prefsDockRedir";
 	protected static PowerManager.WakeLock mWakeLock;
-	private static boolean debuggable = false;
+	private static boolean debuggable = true;
 	
 	public static final void logD(String message) {
 		if(debuggable)
@@ -35,7 +35,8 @@ public class dockRedirCentral {
             	reader.close();
             }
         } catch (IOException e) {
-        	supported = false;
+        	//supported = false;
+        	supported = true; //always return true, depreciate kernel sysfs usage
 		} 
         
         return supported;
@@ -55,13 +56,13 @@ public class dockRedirCentral {
 		
 		//Do I have Samsung framework changes
 		//Can't directly check the framwork so look for related app 
-        try{
+/*        try{
         	final PackageManager packageManager = context.getPackageManager();
             if(packageManager.getApplicationInfo("com.sec.android.providers.downloads",0).enabled)
             	supported = true;
         } catch (PackageManager.NameNotFoundException e) {
             	supported = false;
-        }
+        }*/
           
         return supported;
 	}

@@ -70,6 +70,8 @@ public class dockTrigger extends Activity{
 	        boolean showToast = redir.isChecked();
 	        redir = (CheckBox)findViewById(R.id.widgetScreen);
 	        boolean screenOn = redir.isChecked();
+	        redir = (CheckBox)findViewById(R.id.widgetFallback);
+	        boolean fallback = redir.isChecked();
 	    	
 	        SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
 	        SharedPreferences.Editor editor = settings.edit();
@@ -77,6 +79,7 @@ public class dockTrigger extends Activity{
 	        editor.putBoolean("carRedir", carRedir);
 	        editor.putBoolean("showToast", showToast);
 	        editor.putBoolean("screenOn", screenOn);
+	        editor.putBoolean("screenOn", fallback);
 	        redir = (CheckBox)findViewById(R.id.widgetMaxVol);
 	        if(redir.isChecked())
 	        	editor.putInt("mediaVolume", 0);
@@ -99,6 +102,7 @@ public class dockTrigger extends Activity{
 	        boolean screenOn = settings.getBoolean("screenOn", false);
 	        boolean _docked = settings.getBoolean("_docked", false);
 	        boolean _redirected = settings.getBoolean("_redirected", false);
+	        boolean fallback = settings.getBoolean("fallback", false);
 	        int mediaVolume = settings.getInt("mediaVolume", -1);
 	        
 	        CheckBox redir = new CheckBox(this);
@@ -110,6 +114,8 @@ public class dockTrigger extends Activity{
 	        redir.setChecked(showToast);
 	        redir = (CheckBox)findViewById(R.id.widgetScreen);
 	        redir.setChecked(screenOn);
+	        redir = (CheckBox)findViewById(R.id.widgetFallback);
+	        redir.setChecked(fallback);
 	        redir = (CheckBox)findViewById(R.id.widgetMaxVol);
 	        if (mediaVolume == -1)
 	        	redir.setChecked(false);
