@@ -5,7 +5,7 @@
      android:orientation="vertical">
      
 	<TextView
-	    android:id="@+id/textView1"
+	    android:id="@+id/errorText"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center_vertical|center_horizontal"
@@ -16,6 +16,14 @@
 	    android:textSize="15dp"
 	    android:textStyle="bold" >
 	</TextView>
+
+	<Button
+	    android:id="@+id/unsupReq"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
+	    android:layout_marginTop="10dp"
+	    android:text="@string/support" />
 
 	<ListView android:id="@android:id/list" android:layout_width="match_parent" android:layout_height="match_parent"></ListView>
 	

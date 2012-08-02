@@ -12,12 +12,14 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.PowerManager;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 public final class dockRedirCentral {
 	static final String TAG = "dockSoundRedirector";
 	static final String PREFS_NAME = "prefsDockRedir";
 	protected static PowerManager.WakeLock mWakeLock;
-	private static boolean debuggable = true;
+	private static boolean debuggable = false;
 	
 	public static final void logD(String message) {
 		if(debuggable)
@@ -71,4 +73,35 @@ public final class dockRedirCentral {
           
         return supported;
 	}	
+	
+    public static final OnClickListener onSupClick(){
+    	return new OnClickListener() {
+			public void onClick(View v) {
+				Context context = v.getContext();
+		    	String mailText ="Device information:\n";
+				
+				//Device information
+				mailText.concat("Device: "+ Build.DEVICE+ " - "+ Build.MODEL+ "\n");
+				mailText.concat("OS: "+ Build.VERSION.RELEASE+ "\n");
+				
+				//Last intent
+				SharedPreferences settings = context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
+				mailText.concat("Last intent: "+ settings.getString("_lastIntent", "None"));
+				
+				//Unsupported details
+				if (dockRedirCentral.imSupported(context)) {
+					mailText.concat("Reason for block: N/A\n");
+				} else {
+					mailText.concat("Reason for block: N/A\n");
+				}
+						
+				Intent email = new Intent(Intent.ACTION_SEND);
+				email.putExtra(Intent.EXTRA_EMAIL, new String[]{"android@muteheadlight.net"});		  
+				email.putExtra(Intent.EXTRA_SUBJECT, "DockSoundRedirect: Device support request");
+				email.putExtra(Intent.EXTRA_TEXT, mailText);
+				email.setType("message/rfc822");
+				context.startActivity(Intent.createChooser(email, "Choose an Email client:"));
+		    }
+    	};
+    }
 }

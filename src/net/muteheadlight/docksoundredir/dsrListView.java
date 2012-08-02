@@ -58,12 +58,26 @@ public class dsrListView extends ListActivity {
 	    	redir1.setEnabled(settings.getBoolean("_docked", false));
 	        redir1.setChecked(settings.getBoolean("_redirected", false));
 	        
+	        //Attach support button onClick
+	        final Button supReq = (Button)findViewById(R.id.toggleRedir);
+	        supReq.setOnClickListener(dockRedirCentral.onSupClick());
+	        
 	        // Create setting list
 			ArrayAdapter<Setting> adapter = new InteractiveArrayAdapter(this,listSettings());
 			setListAdapter(adapter);
     	} else {
     		Log.i(dockRedirCentral.TAG,"I am not supported, exiting!");
     		setContentView(R.layout.unsupported);
+    		if (Build.MANUFACTURER.equalsIgnoreCase("samsung")) {
+    			TextView errTxt=(TextView) findViewById(R.id.errorText);
+        		errTxt.setText(R.string.unsupported_manu);
+        		final Button reqSup=(Button) findViewById(R.id.unsupReq);
+        		reqSup.setVisibility(reqSup.INVISIBLE);
+    		} else {
+    			//Attach support button onClick
+    	        final Button supReq = (Button)findViewById(R.id.unsupReq);
+    	        supReq.setOnClickListener(dockRedirCentral.onSupClick());
+    		}
     	}
 	}
 
@@ -82,32 +96,7 @@ public class dsrListView extends ListActivity {
 		return list;
 	}
 	
-        public void onSupClick(View v) {
-    		Context context = v.getContext();
-        	String mailText ="Device information:\n";
-    		
-    		//Device information
-    		mailText.concat("Device: "+ Build.DEVICE+ " - "+ Build.MODEL+ "\n");
-    		mailText.concat("OS: "+ Build.VERSION.RELEASE+ "\n");
-    		
-    		//Last intent
-    		SharedPreferences settings = context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
-    		mailText.concat("Last intent: "+ settings.getString("_lastIntent", "None"));
-    		
-    		//Unsupported details
-    		if (dockRedirCentral.imSupported(context)) {
-    			mailText.concat("Reason for block: N/A\n");
-    		} else {
-    			mailText.concat("Reason for block: N/A\n");
-    		}
-    				
-    		Intent email = new Intent(Intent.ACTION_SEND);
-    		email.putExtra(Intent.EXTRA_EMAIL, new String[]{"android@muteheadlight.net"});		  
-    		email.putExtra(Intent.EXTRA_SUBJECT, "DockSoundRedirect: Device support request");
-    		email.putExtra(Intent.EXTRA_TEXT, mailText);
-    		email.setType("message/rfc822");
-    		context.startActivity(Intent.createChooser(email, "Choose an Email client:"));
-        }
+
 }
 
 

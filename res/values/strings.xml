@@ -19,6 +19,7 @@
         <item>Fall back to v1 redirection</item>
     </string-array>
     <string name="unsupported">Cannot find a supported ROM or kernel</string>
+    <string name="unsupported_manu">Device not made by Samsung</string>
     <string name="support">Request\nDevice\nSupport</string>
     <string name="redirection">Redirection</string>
 </resources>
