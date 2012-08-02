@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent" android:orientation="vertical">
-    <ImageView android:layout_height="wrap_content" android:id="@+id/imageView1" android:layout_width="match_parent" android:src="@drawable/error"></ImageView>
-    <TextView android:layout_height="wrap_content" android:id="@+id/textView1" android:text="Cannot find a supported rom or kernel." android:layout_width="match_parent" android:layout_gravity="center_horizontal|bottom" android:textStyle="bold" android:textColor="#cc0000" android:textSize="20px" android:gravity="center_horizontal|bottom"></TextView>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="vertical">
+     
+	<TextView
+	    android:id="@+id/textView1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_vertical|center_horizontal"
+	    android:drawableTop="@drawable/error"
+	    android:gravity="center_horizontal|center_vertical"
+	    android:text="@string/unsupported"
+	    android:textColor="#cc0000"
+	    android:textSize="15dp"
+	    android:textStyle="bold" >
+	</TextView>
+
+	<ListView android:id="@android:id/list" android:layout_width="match_parent" android:layout_height="match_parent"></ListView>
+	
 </LinearLayout>

@@ -5,16 +5,17 @@ package net.muteheadlight.docksoundredir;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.PowerManager;
 import android.util.Log;
 
-public class dockRedirCentral {
-	public static final String TAG = "dockSoundRedirector";
-	public static final String PREFS_NAME = "prefsDockRedir";
+public final class dockRedirCentral {
+	static final String TAG = "dockSoundRedirector";
+	static final String PREFS_NAME = "prefsDockRedir";
 	protected static PowerManager.WakeLock mWakeLock;
 	private static boolean debuggable = true;
 	
@@ -37,6 +38,7 @@ public class dockRedirCentral {
         } catch (IOException e) {
         	//supported = false;
         	supported = true; //always return true, depreciate kernel sysfs usage
+        	logD("No kernel sysfs found.");
 		} 
         
         return supported;
@@ -47,23 +49,26 @@ public class dockRedirCentral {
 		boolean supported = false;
 		
 		//Am I on a Samsung device?
-		if (!Build.MANUFACTURER.equalsIgnoreCase("samsung"))
+		if (!Build.MANUFACTURER.equalsIgnoreCase("samsung") && !debuggable) {
+			logD("Phone not made by Samsung.");
 			return false;
+		}
 		
 		//Do I have kernel support
 		if (useKernel())
-				return true;
+			return true;
 		
 		//Do I have Samsung framework changes
 		//Can't directly check the framwork so look for related app 
-/*        try{
+        try{
         	final PackageManager packageManager = context.getPackageManager();
             if(packageManager.getApplicationInfo("com.sec.android.providers.downloads",0).enabled)
             	supported = true;
         } catch (PackageManager.NameNotFoundException e) {
             	supported = false;
-        }*/
+            	logD("Dock framework not found.");
+        }
           
         return supported;
-	}
+	}	
 }

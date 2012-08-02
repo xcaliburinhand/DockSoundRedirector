@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, dockredir!</string>
     <string name="app_name">Dock Sound Redirector</string>
+    <string name="app_author">By xcaliburinhand\nVersion:&#160;</string>
+    <string-array name="checks_keys">
+        <item>carRedir</item>
+        <item>deskRedir</item>
+        <item>showToast</item>
+        <item>screenOn</item>
+        <item>mediaVolume</item>
+        <item>fallback</item>
+    </string-array>
+    <string-array name="checks">
+        <item>Redirect audio through car dock</item>
+        <item>Redirect audio through desk dock</item>
+        <item>Show redirection notification</item>
+        <item>Keep screen on when docked</item>
+        <item>Maximize volume when docked</item>
+        <item>Fall back to v1 redirection</item>
+    </string-array>
+    <string name="unsupported">Cannot find a supported ROM or kernel</string>
+    <string name="support">Request\nDevice\nSupport</string>
+    <string name="redirection">Redirection</string>
 </resources>

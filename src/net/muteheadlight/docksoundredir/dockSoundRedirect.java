@@ -24,16 +24,22 @@ public class dockSoundRedirect extends BroadcastReceiver{
 
     	_context = context;
     	String intentAction = intent.getAction();
-    	dockRedirCentral.logD("Recieved a message: " .concat(intentAction));
     	SharedPreferences settings = _context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
+    	
+    	dockRedirCentral.logD("Recieved a message: " .concat(intentAction));
+    	SharedPreferences.Editor editor = settings.edit();
+    	editor.putString("_lastIntent", intentAction);
+    	editor.commit();
+    	
         boolean carRedir = settings.getBoolean("carRedir", true);
         boolean deskRedir = settings.getBoolean("deskRedir", true);
-        boolean useKernel = settings.getBoolean("useKernel", false);
+        boolean useKernel = settings.getBoolean("_useKernel", false);
         boolean showToast = settings.getBoolean("showToast", true);
         boolean _docked = settings.getBoolean("_docked", false);
         boolean screenOn = settings.getBoolean("screenOn", false);
-        boolean _fallback = settings.getBoolean("_fallback", false);
-        int mediaVolume = settings.getInt("mediaVolume", -1);
+        boolean fallback = settings.getBoolean("fallback", false);
+        boolean mediaVolume = settings.getBoolean("fallback", false);
+        int _mediaVolume = settings.getInt("_mediaVolume", -1);
         int _deviceNum = settings.getInt("_deviceNum", 0x0000);
     	
     	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0){   
@@ -52,11 +58,10 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    		return;
 
 	        CharSequence text = "Dock Audio Redirection Disabled";
-	        SharedPreferences.Editor editor = settings.edit();
 	        
 	    	if (dockstate > 0){
 	    		if ((dockstate == 2 & carRedir) || (dockstate == 1 && deskRedir) || (intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") == 0)){
-	    			if (!_fallback) {
+	    			if (!fallback) {
 	    				redirectConnectionState(_deviceNum,1);
 	    			} else {
 		    			if (useKernel)
@@ -68,9 +73,9 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    			if (screenOn)
 	    				dockRedirCentral.mWakeLock.acquire();
 	    			
-	    			if (!(mediaVolume == -1)) {
+	    			if (mediaVolume) {
 	    				AudioManager audioManager = (AudioManager)_context.getSystemService(Context.AUDIO_SERVICE);
-	    				editor.putInt("mediaVolume",audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+	    				editor.putInt("_mediaVolume",audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
 	    				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),AudioManager.FLAG_SHOW_UI);
 	    			}
 	    				
@@ -87,7 +92,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
         	        _context.sendBroadcast(intent1);
 	            }
 	            
-	            if (!_fallback){
+	            if (!fallback){
 	            	redirectConnectionState(_deviceNum,0);
 	            } else {
 		    		if (useKernel)
@@ -101,9 +106,9 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    				dockRedirCentral.mWakeLock.release();
 	    		}
 	    		
-    			if (!(mediaVolume == -1)) {
+    			if (mediaVolume) {
     				AudioManager audioManager = (AudioManager)_context.getSystemService(Context.AUDIO_SERVICE);
-    				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,mediaVolume,AudioManager.FLAG_SHOW_UI);
+    				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,_mediaVolume,AudioManager.FLAG_SHOW_UI);
     			}
     			
 	            text = "Audio Routed Normal.";

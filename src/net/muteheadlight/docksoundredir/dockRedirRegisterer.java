@@ -30,7 +30,13 @@ public class dockRedirRegisterer extends Service{
      
      SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
      SharedPreferences.Editor editor = settings.edit();
-     editor.putBoolean("useKernel", dockRedirCentral.useKernel());
+     editor.putBoolean("_useKernel", dockRedirCentral.useKernel());
+     if (settings.getInt("_mediaVolume", -999) == -999) { //set some defaults
+ 		editor.putBoolean("carRedir", true);
+ 		editor.putBoolean("deskRedir", true);
+ 		editor.putBoolean("showToast", true);
+ 		editor.putInt("_mediaVolume", -1);
+     }
      editor.commit();
      
      IntentFilter filter = new IntentFilter(Intent.ACTION_DOCK_EVENT);
