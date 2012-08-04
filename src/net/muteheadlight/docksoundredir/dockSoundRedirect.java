@@ -26,7 +26,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
     	String intentAction = intent.getAction();
     	SharedPreferences settings = _context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
     	
-    	dockRedirCentral.logD("Recieved a message: " .concat(intentAction));
+    	dockRedirCentral.logD("Recieved a message: "+ intentAction);
     	SharedPreferences.Editor editor = settings.edit();
     	editor.putString("_lastIntent", intentAction);
     	editor.commit();
@@ -48,7 +48,6 @@ public class dockSoundRedirect extends BroadcastReceiver{
     			   _context.startService(new Intent(_context, dockRedirRegisterer.class));
     	 } else {
 	    	int dockstate = intent.getIntExtra("android.intent.extra.DOCK_STATE", 0);
-	    	dockRedirCentral.logD("_docked " .concat(String.valueOf(_docked)));
 	    	
 	    	//Logic to prevent being triggered by rebroadcast
 	    	if((dockstate == 1 || dockstate == 2) && _docked && (intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0))
@@ -81,16 +80,19 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    				
 	        		text = "Audio Routed to Dock!";
 	        		
-	        		if(intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0)
-	        			editor.putBoolean("_docked", true);
 	        		editor.putBoolean("_redirected", true);
 	    		}
+        		//If redirect was triggered manually, don't change dock status
+        		if(intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0) 
+        		editor.putBoolean("_docked", true);
 	    	} else {
-	            if(intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0) {
-        			editor.putBoolean("_docked", false);           	
-        	        Intent intent1 = new Intent(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
-        	        _context.sendBroadcast(intent1);
-	            }
+	    		//If redirect was triggered manually, don't change dock status
+	            if(intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0)
+        			editor.putBoolean("_docked", false); 
+	            
+	            //Pause any playing audio
+        	    Intent intent1 = new Intent(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        	    _context.sendBroadcast(intent1);
 	            
 	            if (!fallback){
 	            	redirectConnectionState(_deviceNum,0);
@@ -121,6 +123,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	        	Toast toast = Toast.makeText(_context, text, duration);
 	        	toast.show();
 	        }
+	        
 	        editor.commit();
 	        dockRedirCentral.logD((String)text);	
     	 }
@@ -128,8 +131,8 @@ public class dockSoundRedirect extends BroadcastReceiver{
     
     private void redirectSamsung(int enable){
     	Intent intent1 = new Intent();
-        Intent intentRet = intent1.setAction("com.sec.android.intent.action.INTERNAL_SPEAKER");
-    	intentRet = intent1.putExtra("state", enable);
+        intent1.setAction("com.sec.android.intent.action.INTERNAL_SPEAKER");
+    	intent1.putExtra("state", enable);
         _context.sendBroadcast(intent1);
         dockRedirCentral.logD("redirecting via ROM");
     }
@@ -156,13 +159,14 @@ public class dockSoundRedirect extends BroadcastReceiver{
     	}
     	
     	setDeviceConnectionState(_deviceNum, enable, "");
-    	dockRedirCentral.logD("redirecting via connection state");
+    	dockRedirCentral.logD("redirecting via connection state - dev: "+ String.valueOf(_deviceNum));
     }
     
     private int getDockDeviceNumber() {
     	int _deviceNum = 0x0000;
+    	String dev = Build.DEVICE.toLowerCase();
     			
-    	if (Build.DEVICE.contains("I896") || Build.DEVICE.contains("T959")) { //Galaxy S I
+    	if (dev.contains("d700") || dev.contains("i500") || dev.contains("i896") || dev.contains("i897") || dev.contains("i9000") || dev.contains("t959")) { //Galaxy S I
     		_deviceNum = Integer.valueOf(4096);
     	} else { //default
     		_deviceNum = 0x800;

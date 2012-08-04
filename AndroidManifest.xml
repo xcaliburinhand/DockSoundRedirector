@@ -16,13 +16,12 @@
                 <category android:name="android.intent.category.LE_DESK_DOCK" />
                 <category android:name="android.intent.category.HE_DESK_DOCK" />
                 <action android:name="net.muteheadlight.docksoundredir.intent.action.REDIRECT" />
-                <action android:name="net.muteheadlight.docksoundredir.intent.action.SUPPORT_MAIL" />
             </intent-filter>
         </receiver>
         <activity android:name="net.muteheadlight.docksoundredir.dsrListView">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER"></category>
+	            <action android:name="android.intent.action.MAIN" />
+	            <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
         </activity>
         <service android:name="net.muteheadlight.docksoundredir.dockRedirRegisterer"></service>

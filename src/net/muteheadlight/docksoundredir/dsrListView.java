@@ -26,7 +26,7 @@ public class dsrListView extends ListActivity {
 		if(dockRedirCentral.imSupported(this,true)){
 			startService(new Intent(this, dockRedirRegisterer.class));
 	        
-			setContentView(R.layout.footer);
+			setContentView(R.layout.main);
 	        
 			TextView ver=(TextView) findViewById(R.id.app_info);
 	        try {
@@ -41,12 +41,12 @@ public class dsrListView extends ListActivity {
 	        redir1.setOnClickListener(new OnClickListener() {
 		        public void onClick(View v) {
 		   		 final ToggleButton redir1 = (ToggleButton)findViewById(R.id.toggleRedir);
-		        	 Intent intent1 = new Intent();
-		            Intent intentRet = intent1.setAction("net.muteheadlight.docksoundredir.intent.action.REDIRECT");
+		   		 	Intent intent1 = new Intent();
+		            intent1.setAction("net.muteheadlight.docksoundredir.intent.action.REDIRECT");
 		            if (redir1.isChecked()) {
-		            	intentRet = intent1.putExtra("android.intent.extra.DOCK_STATE", 1);
+		            	intent1.putExtra("android.intent.extra.DOCK_STATE", 1);
 		            } else {
-		            	intentRet = intent1.putExtra("android.intent.extra.DOCK_STATE", 0);
+		            	intent1.putExtra("android.intent.extra.DOCK_STATE", 0);
 		            }
 		            sendBroadcast(intent1);
 		        }
@@ -66,6 +66,18 @@ public class dsrListView extends ListActivity {
     		Log.i(dockRedirCentral.TAG,"I am not supported, exiting!");
     		setContentView(R.layout.unsupported);
     	}
+	}
+	
+	@Override
+	public void onResume() {
+		super.onStart();
+		SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
+		boolean _docked = settings.getBoolean("_docked", false);
+        boolean _redirected = settings.getBoolean("_redirected", false);
+        
+		final ToggleButton redir1 = (ToggleButton)findViewById(R.id.toggleRedir);
+	    redir1.setEnabled(_docked);
+	    redir1.setChecked(_redirected);
 	}
 
 	private List<Setting> listSettings() {

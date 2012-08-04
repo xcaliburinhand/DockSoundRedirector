@@ -49,6 +49,7 @@ public final class dockRedirCentral {
 	public static final boolean imSupported(Context context){
 		boolean supported = false;
 		
+		//Check phone manufacturer
 		if (!imSupported(context, true)) {
 			return false;
 		}
@@ -80,7 +81,7 @@ public final class dockRedirCentral {
 			} else {
 				return true;
 			}
-		} else {		
+		} else {	//revert to full check	
 			return imSupported(context);
 		}
 	}
@@ -92,12 +93,15 @@ public final class dockRedirCentral {
 		    	String mailText ="Device information:\n";
 				
 				//Device information
-				mailText.concat("Device: "+ Build.DEVICE+ " - "+ Build.MODEL+ "\n");
-				mailText.concat("OS: "+ Build.VERSION.RELEASE+ "\n");
+				mailText = mailText.concat("Device: "+ Build.DEVICE+ " - "+ Build.MODEL+ "\n");
+				mailText = mailText.concat("OS: "+ Build.VERSION.RELEASE+ " - "+ Build.DISPLAY+ "\n");
 				
 				//Last intent
 				SharedPreferences settings = context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
-				mailText.concat("Last intent: "+ settings.getString("_lastIntent", "None"));
+				mailText = mailText.concat("Last intent: "+ settings.getString("_lastIntent", "None"));
+				
+				//Audio device number
+				mailText = mailText.concat("Audio Device: "+ String.valueOf(settings.getInt("_deviceNum", 0x0000)));
 						
 				Intent email = new Intent(Intent.ACTION_SEND);
 				email.putExtra(Intent.EXTRA_EMAIL, new String[]{"android@muteheadlight.net"});		  
