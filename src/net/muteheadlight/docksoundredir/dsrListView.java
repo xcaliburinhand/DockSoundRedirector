@@ -4,15 +4,12 @@ package net.muteheadlight.docksoundredir;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import net.muteheadlight.dockredir.R;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +23,7 @@ public class dsrListView extends ListActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		
-		if(dockRedirCentral.imSupported(this)){
+		if(dockRedirCentral.imSupported(this,true)){
 			startService(new Intent(this, dockRedirRegisterer.class));
 	        
 			setContentView(R.layout.footer);
@@ -59,7 +56,7 @@ public class dsrListView extends ListActivity {
 	        redir1.setChecked(settings.getBoolean("_redirected", false));
 	        
 	        //Attach support button onClick
-	        final Button supReq = (Button)findViewById(R.id.toggleRedir);
+	        final Button supReq = (Button)findViewById(R.id.supportButton);
 	        supReq.setOnClickListener(dockRedirCentral.onSupClick());
 	        
 	        // Create setting list
@@ -68,16 +65,6 @@ public class dsrListView extends ListActivity {
     	} else {
     		Log.i(dockRedirCentral.TAG,"I am not supported, exiting!");
     		setContentView(R.layout.unsupported);
-    		if (Build.MANUFACTURER.equalsIgnoreCase("samsung")) {
-    			TextView errTxt=(TextView) findViewById(R.id.errorText);
-        		errTxt.setText(R.string.unsupported_manu);
-        		final Button reqSup=(Button) findViewById(R.id.unsupReq);
-        		reqSup.setVisibility(reqSup.INVISIBLE);
-    		} else {
-    			//Attach support button onClick
-    	        final Button supReq = (Button)findViewById(R.id.unsupReq);
-    	        supReq.setOnClickListener(dockRedirCentral.onSupClick());
-    		}
     	}
 	}
 
@@ -90,6 +77,13 @@ public class dsrListView extends ListActivity {
 		
 		for(String settingText : settingTexts){
 			list.add(new Setting(settingText,settingKeys[x],getApplicationContext()));
+    		if (settingKeys[x].contentEquals("fallback")) {
+    			if (!dockRedirCentral.imSupported(getApplicationContext())) { 
+	    			Setting fallback = list.get(x);
+	    			fallback.setDisabled(true);
+	    			list.set(x, fallback);
+    			}
+    		}
 			x++;
 		}
 		

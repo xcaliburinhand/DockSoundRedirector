@@ -19,7 +19,7 @@ public final class dockRedirCentral {
 	static final String TAG = "dockSoundRedirector";
 	static final String PREFS_NAME = "prefsDockRedir";
 	protected static PowerManager.WakeLock mWakeLock;
-	private static boolean debuggable = false;
+	private static boolean debuggable = true;
 	
 	public static final void logD(String message) {
 		if(debuggable)
@@ -38,8 +38,7 @@ public final class dockRedirCentral {
             	reader.close();
             }
         } catch (IOException e) {
-        	//supported = false;
-        	supported = true; //always return true, depreciate kernel sysfs usage
+        	supported = false;
         	logD("No kernel sysfs found.");
 		} 
         
@@ -50,9 +49,7 @@ public final class dockRedirCentral {
 	public static final boolean imSupported(Context context){
 		boolean supported = false;
 		
-		//Am I on a Samsung device?
-		if (!Build.MANUFACTURER.equalsIgnoreCase("samsung") && !debuggable) {
-			logD("Phone not made by Samsung.");
+		if (!imSupported(context, true)) {
 			return false;
 		}
 		
@@ -74,6 +71,20 @@ public final class dockRedirCentral {
         return supported;
 	}	
 	
+	public static final boolean imSupported(Context context, boolean limited){		
+		if (limited) {
+			//Am I on a Samsung device?
+			if (!Build.MANUFACTURER.equalsIgnoreCase("samsung") && !debuggable) {
+				logD("Phone not made by Samsung.");
+				return false;
+			} else {
+				return true;
+			}
+		} else {		
+			return imSupported(context);
+		}
+	}
+
     public static final OnClickListener onSupClick(){
     	return new OnClickListener() {
 			public void onClick(View v) {
@@ -87,13 +98,6 @@ public final class dockRedirCentral {
 				//Last intent
 				SharedPreferences settings = context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
 				mailText.concat("Last intent: "+ settings.getString("_lastIntent", "None"));
-				
-				//Unsupported details
-				if (dockRedirCentral.imSupported(context)) {
-					mailText.concat("Reason for block: N/A\n");
-				} else {
-					mailText.concat("Reason for block: N/A\n");
-				}
 						
 				Intent email = new Intent(Intent.ACTION_SEND);
 				email.putExtra(Intent.EXTRA_EMAIL, new String[]{"android@muteheadlight.net"});		  

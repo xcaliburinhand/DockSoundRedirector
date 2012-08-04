@@ -56,6 +56,7 @@ public class InteractiveArrayAdapter extends ArrayAdapter<Setting> {
 		ViewHolder holder = (ViewHolder) view.getTag();
 		holder.text.setText(list.get(position).getText());
 		holder.checkbox.setChecked(list.get(position).getChecked());
+		holder.checkbox.setEnabled(!list.get(position).isDisabled());
 
 		return view;
 	}

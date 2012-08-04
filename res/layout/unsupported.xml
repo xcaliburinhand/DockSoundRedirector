@@ -11,19 +11,11 @@
 	    android:layout_gravity="center_vertical|center_horizontal"
 	    android:drawableTop="@drawable/error"
 	    android:gravity="center_horizontal|center_vertical"
-	    android:text="@string/unsupported"
+	    android:text="@string/unsupported_manu"
 	    android:textColor="#cc0000"
 	    android:textSize="15dp"
 	    android:textStyle="bold" >
 	</TextView>
-
-	<Button
-	    android:id="@+id/unsupReq"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="center_horizontal"
-	    android:layout_marginTop="10dp"
-	    android:text="@string/support" />
 
 	<ListView android:id="@android:id/list" android:layout_width="match_parent" android:layout_height="match_parent"></ListView>
 	

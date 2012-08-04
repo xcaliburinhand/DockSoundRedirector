@@ -10,11 +10,13 @@ public class Setting {
 	private String text;
 	private String key;
 	private static Context context;
+	private boolean disabled;
 
 	public Setting(String text, String key, Context context) {
 		this.text = text;
 		this.key = key;
 		Setting.context = context;
+		disabled = false;
 	}
 
 	public String getText() {
@@ -36,5 +38,13 @@ public class Setting {
 	    editor.putBoolean(key, selected);
 	    editor.commit();
 	    dockRedirCentral.logD(key.concat(" has been set to ").concat(String.valueOf(selected)));
+	}
+
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 } 
