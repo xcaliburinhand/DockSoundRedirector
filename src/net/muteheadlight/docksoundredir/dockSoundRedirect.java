@@ -38,14 +38,22 @@ public class dockSoundRedirect extends BroadcastReceiver{
         boolean _docked = settings.getBoolean("_docked", false);
         boolean screenOn = settings.getBoolean("screenOn", false);
         boolean fallback = settings.getBoolean("fallback", false);
-        boolean mediaVolume = settings.getBoolean("mediaVolume", false);
+        boolean mediaVolume = false;
+        try {
+        	mediaVolume = settings.getBoolean("mediaVolume", false);
+        } catch (ClassCastException e) {
+        	editor.putBoolean("mediaVolume", false);
+        	editor.commit();
+        }
         int _mediaVolume = settings.getInt("_mediaVolume", -1);
         int _deviceNum = settings.getInt("_deviceNum", 0x0000);
     	
     	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0){   
     		   dockRedirCentral.logD("Received ACTION_BOOT_COMPLETED");   
-    		   if(dockRedirCentral.imSupported(_context,true))
+    		   if(dockRedirCentral.imSupported(_context,true)) {
     			   _context.startService(new Intent(_context, dockRedirRegisterer.class));
+    			   _deviceNum = getDockDeviceNumber(); //refresh dock device number on boot
+    		   }
     	 } else {
 	    	int dockstate = intent.getIntExtra("android.intent.extra.DOCK_STATE", 0);
 	    	editor.putString("_lastIntent", settings.getString("_lastIntent", "None").concat(" - devID: "+ dockstate));

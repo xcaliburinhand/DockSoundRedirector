@@ -101,7 +101,7 @@ public final class dockRedirCentral {
 				mailText = mailText.concat("Last intent: "+ settings.getString("_lastIntent", "None")+ "\n");
 				
 				//Audio device number
-				mailText = mailText.concat("Audio Device: "+ String.valueOf(settings.getInt("_deviceNum", 0x0000))+ "\n");
+				mailText = mailText.concat("Audio Device: "+ String.valueOf(settings.getInt("_deviceNum", -1))+ "\n");
 						
 				Intent email = new Intent(Intent.ACTION_SEND);
 				email.putExtra(Intent.EXTRA_EMAIL, new String[]{"android@muteheadlight.net"});		  
