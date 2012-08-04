@@ -48,6 +48,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
     			   _context.startService(new Intent(_context, dockRedirRegisterer.class));
     	 } else {
 	    	int dockstate = intent.getIntExtra("android.intent.extra.DOCK_STATE", 0);
+	    	editor.putString("_lastIntent", settings.getString("_lastIntent", "None").concat(" - devID: "+ dockstate));
 	    	
 	    	//Logic to prevent being triggered by rebroadcast
 	    	if((dockstate == 1 || dockstate == 2) && _docked && (intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0))

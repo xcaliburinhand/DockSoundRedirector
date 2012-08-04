@@ -19,7 +19,7 @@ public final class dockRedirCentral {
 	static final String TAG = "dockSoundRedirector";
 	static final String PREFS_NAME = "prefsDockRedir";
 	protected static PowerManager.WakeLock mWakeLock;
-	private static boolean debuggable = true;
+	private static boolean debuggable = false;
 	
 	public static final void logD(String message) {
 		if(debuggable)
@@ -98,10 +98,10 @@ public final class dockRedirCentral {
 				
 				//Last intent
 				SharedPreferences settings = context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
-				mailText = mailText.concat("Last intent: "+ settings.getString("_lastIntent", "None"));
+				mailText = mailText.concat("Last intent: "+ settings.getString("_lastIntent", "None")+ "\n");
 				
 				//Audio device number
-				mailText = mailText.concat("Audio Device: "+ String.valueOf(settings.getInt("_deviceNum", 0x0000)));
+				mailText = mailText.concat("Audio Device: "+ String.valueOf(settings.getInt("_deviceNum", 0x0000))+ "\n");
 						
 				Intent email = new Intent(Intent.ACTION_SEND);
 				email.putExtra(Intent.EXTRA_EMAIL, new String[]{"android@muteheadlight.net"});		  

@@ -71,13 +71,15 @@ public class dsrListView extends ListActivity {
 	@Override
 	public void onResume() {
 		super.onStart();
-		SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
-		boolean _docked = settings.getBoolean("_docked", false);
-        boolean _redirected = settings.getBoolean("_redirected", false);
-        
-		final ToggleButton redir1 = (ToggleButton)findViewById(R.id.toggleRedir);
-	    redir1.setEnabled(_docked);
-	    redir1.setChecked(_redirected);
+		if(dockRedirCentral.imSupported(this,true)){
+			SharedPreferences settings = getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
+			boolean _docked = settings.getBoolean("_docked", false);
+	        boolean _redirected = settings.getBoolean("_redirected", false);
+	        
+			final ToggleButton redir1 = (ToggleButton)findViewById(R.id.toggleRedir);
+		    redir1.setEnabled(_docked);
+		    redir1.setChecked(_redirected);
+		}
 	}
 
 	private List<Setting> listSettings() {
