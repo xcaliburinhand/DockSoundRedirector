@@ -8,7 +8,9 @@ import java.io.IOException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.PowerManager;
 import android.util.Log;
@@ -102,7 +104,15 @@ public final class dockRedirCentral {
 				
 				//Audio device number
 				mailText = mailText.concat("Audio Device: "+ String.valueOf(settings.getInt("_deviceNum", -1))+ "\n");
-						
+
+				//App version
+		        try {
+		        	PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(),0);
+		        	mailText = mailText.concat("App version: "+packageInfo.versionName+ "\n");
+		        } catch (NameNotFoundException e) {
+		        	mailText = mailText.concat("App version: unknown\n");
+		        } 
+				
 				Intent email = new Intent(Intent.ACTION_SEND);
 				email.putExtra(Intent.EXTRA_EMAIL, new String[]{"android@muteheadlight.net"});		  
 				email.putExtra(Intent.EXTRA_SUBJECT, "DockSoundRedirect: Device support request");

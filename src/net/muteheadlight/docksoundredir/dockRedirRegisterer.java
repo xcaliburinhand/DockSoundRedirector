@@ -35,7 +35,7 @@ public class dockRedirRegisterer extends Service{
  		editor.putBoolean("carRedir", true);
  		editor.putBoolean("deskRedir", true);
  		editor.putBoolean("showToast", true);
- 		editor.putBoolean("mediaVolume", false); //cleanup, type change from previous versions 
+ 		editor.remove("mediaVolume").putBoolean("mediaVolume", false); //cleanup, type change from previous versions 
  		editor.putInt("_mediaVolume", -1);
      }
      editor.commit();

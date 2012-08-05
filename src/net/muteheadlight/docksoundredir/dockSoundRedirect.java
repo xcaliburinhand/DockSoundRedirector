@@ -42,7 +42,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
         try {
         	mediaVolume = settings.getBoolean("mediaVolume", false);
         } catch (ClassCastException e) {
-        	editor.putBoolean("mediaVolume", false);
+        	editor.remove("mediaVolume").putBoolean("mediaVolume", true);
         	editor.commit();
         }
         int _mediaVolume = settings.getInt("_mediaVolume", -1);
