@@ -177,7 +177,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
     			
     	if (dev.contains("i500") || dev.contains("i896") || dev.contains("i897") || dev.contains("i9000") || dev.contains("t959")) { //Galaxy S I
     		_deviceNum = Integer.valueOf(4096);
-    	} else if (dev.contains("d700")) {
+    	} else if (dev.contains("d700") || dev.contains("gi1")) {
     		_deviceNum = 0x1000;
     	} else { //default
     		_deviceNum = 0x800;
