@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="net.muteheadlight.dockredir"
-      android:versionName="2.03" android:versionCode="203">
+      android:versionName="2.04" android:versionCode="204">
 <uses-sdk android:targetSdkVersion="16" android:minSdkVersion="8"></uses-sdk>
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
 <uses-permission android:name="android.permission.WAKE_LOCK" />
