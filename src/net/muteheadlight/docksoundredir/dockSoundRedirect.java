@@ -48,8 +48,8 @@ public class dockSoundRedirect extends BroadcastReceiver{
         int _mediaVolume = settings.getInt("_mediaVolume", -1);
         int _deviceNum = settings.getInt("_deviceNum", 0x0000);
     	
-    	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0){   
-    		   dockRedirCentral.logD("Received ACTION_BOOT_COMPLETED");   
+    	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0 || intent.getAction().compareTo(Intent.ACTION_PACKAGE_REPLACED) == 0){   
+    		   dockRedirCentral.logD("Initial startup, received "+ intent.getAction());   
     		   if(dockRedirCentral.imSupported(_context,true)) {
     			   _context.startService(new Intent(_context, dockRedirRegisterer.class));
     			   _deviceNum = getDockDeviceNumber(); //refresh dock device number on boot
