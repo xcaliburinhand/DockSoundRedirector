@@ -175,12 +175,12 @@ public class dockSoundRedirect extends BroadcastReceiver{
     	int _deviceNum = 0x0000;
     	String dev = Build.DEVICE.toLowerCase();
     			
-    	if (dev.contains("i500") || dev.contains("i896") || dev.contains("i897") || dev.contains("i9000") || dev.contains("t959")) { //Galaxy S I
-    		_deviceNum = Integer.valueOf(4096);
-    	} else if (dev.contains("d700") || dev.contains("gi1")) {
-    		_deviceNum = 0x1000;
+    	if (dev.contains("d700") || dev.contains("gi1") || dev.contains("i400") || dev.contains("i500") || dev.contains("i896") || dev.contains("i897") || dev.contains("i9000") || dev.contains("t959")) { //Galaxy S I
+    		_deviceNum = 0x1000; //4096
+    	} else if (dev.contains("i9001")) {
+    		_deviceNum = 0x4000; //16384
     	} else { //default
-    		_deviceNum = 0x800;
+    		_deviceNum = 0x800; //2048
     	}
     	
     	//store dock device number for future lookup
