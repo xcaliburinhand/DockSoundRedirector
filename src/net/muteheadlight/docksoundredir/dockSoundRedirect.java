@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Build;
+import android.util.Log;
 import android.widget.Toast;
 
 public class dockSoundRedirect extends BroadcastReceiver{
@@ -78,8 +79,13 @@ public class dockSoundRedirect extends BroadcastReceiver{
 		    				redirectSamsung(1);
 	    			}
 	    			
-	    			if (screenOn)
-	    				dockRedirCentral.mWakeLock.acquire();
+	    			if (screenOn) {
+	    				try {
+	    					dockRedirCentral.mWakeLock.acquire();
+	    				} catch (Exception e) {
+		    				Log.d(dockRedirCentral.TAG, "Unable to aquire wakelock");
+		    			}
+	    			}
 	    			
 	    			if (mediaVolume) {
 	    				AudioManager audioManager = (AudioManager)_context.getSystemService(Context.AUDIO_SERVICE);
@@ -113,8 +119,12 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	            }
 	    		
 	    		if (screenOn){
-	    			if(dockRedirCentral.mWakeLock.isHeld())
-	    				dockRedirCentral.mWakeLock.release();
+	    			try {
+	    				if(dockRedirCentral.mWakeLock.isHeld())
+	    					dockRedirCentral.mWakeLock.release();
+	    			} catch (Exception e) {
+	    				Log.d(dockRedirCentral.TAG, "Unable to check/release wakelock");
+	    			}
 	    		}
 	    		
     			if (mediaVolume) {
