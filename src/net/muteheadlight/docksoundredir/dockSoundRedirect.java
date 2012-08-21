@@ -49,13 +49,17 @@ public class dockSoundRedirect extends BroadcastReceiver{
         int _mediaVolume = settings.getInt("_mediaVolume", -1);
         int _deviceNum = settings.getInt("_deviceNum", 0x0000);
     	
-    	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0 || intent.getAction().compareTo(Intent.ACTION_PACKAGE_REPLACED) == 0){   
-    		   dockRedirCentral.logD("Initial startup, received "+ intent.getAction());   
-    		   if(dockRedirCentral.imSupported(_context,true)) {
-    			   _context.startService(new Intent(_context, dockRedirRegisterer.class));
-    			   _deviceNum = getDockDeviceNumber(); //refresh dock device number on boot
-    		   }
+    	 if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0 || intent.getAction().compareTo(Intent.ACTION_PACKAGE_REPLACED) == 0){
+    		 dockRedirCentral.logD("Initial startup, received "+ intent.getAction());   
+			 if(dockRedirCentral.imSupported(_context,true)) {
+				 editor.putBoolean("_useKernel", dockRedirCentral.useKernel());
+				 				     
+				 dockRedirCentral.warmUp(_context);
+				 _deviceNum = getDockDeviceNumber(); //refresh dock device number on boot
+			 }
     	 } else {
+    		if (!dockRedirCentral.imSupported(_context,true)) return;
+    		
 	    	int dockstate = intent.getIntExtra("android.intent.extra.DOCK_STATE", 0);
 	    	editor.putString("_lastIntent", settings.getString("_lastIntent", "None").concat(" - devID: "+ dockstate));
 	    	
@@ -83,7 +87,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    				try {
 	    					dockRedirCentral.mWakeLock.acquire();
 	    				} catch (Exception e) {
-		    				Log.d(dockRedirCentral.TAG, "Unable to aquire wakelock");
+		    				Log.d(dockRedirCentral.getTag(), "Unable to aquire wakelock");
 		    			}
 	    			}
 	    			
@@ -123,7 +127,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	    				if(dockRedirCentral.mWakeLock.isHeld())
 	    					dockRedirCentral.mWakeLock.release();
 	    			} catch (Exception e) {
-	    				Log.d(dockRedirCentral.TAG, "Unable to check/release wakelock");
+	    				Log.d(dockRedirCentral.getTag(), "Unable to check/release wakelock");
 	    			}
 	    		}
 	    		

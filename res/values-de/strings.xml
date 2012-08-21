@@ -22,4 +22,8 @@
     <string name="unsupported_manu">Handy nicht von Samsung</string>
     <string name="support">Request\nDevice\nSupport</string>
     <string name="redirection">Redirection</string>
+    
+    <string name="taskerNormal">Redirect Normal</string>
+    <string name="taskerRedirect">Redirect to Dock</string>
+    <string name="title_activity_tasker_chooser">Dock Sound Redirector Tasker Choice</string>
 </resources>

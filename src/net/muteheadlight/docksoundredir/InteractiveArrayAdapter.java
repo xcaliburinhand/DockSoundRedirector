@@ -5,7 +5,9 @@
 package net.muteheadlight.docksoundredir;
 
 import java.util.List;
+
 import net.muteheadlight.dockredir.R;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;

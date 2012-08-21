@@ -1,32 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="net.muteheadlight.dockredir"
-      android:versionName="2.10" android:versionCode="210">
-<uses-sdk android:targetSdkVersion="16" android:minSdkVersion="8"></uses-sdk>
-<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-<uses-permission android:name="android.permission.WAKE_LOCK" />
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    package="net.muteheadlight.dockredir"
+    android:versionCode="211"
+    android:versionName="2.11" >
 
-     <application android:icon="@drawable/icon" android:theme="@android:style/Theme.NoTitleBar" android:label="@string/app_name">
-        <receiver android:name="net.muteheadlight.docksoundredir.dockSoundRedirect">
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="16" >
+    </uses-sdk>
+
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <receiver android:name="net.muteheadlight.docksoundredir.dockSoundRedirect" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
-    			<data android:scheme="package" android:path="net.muteheadlight.docksoundredir" />
+
+                <data
+                    android:path="net.muteheadlight.docksoundredir"
+                    android:scheme="package" />
             </intent-filter>
             <intent-filter>
-               	<action android:name="android.intent.action.DOCK_EVENT" />
+                <action android:name="android.intent.action.DOCK_EVENT" />
                 <action android:name="net.muteheadlight.docksoundredir.intent.action.REDIRECT" />
             </intent-filter>
         </receiver>
-        <activity android:name="net.muteheadlight.docksoundredir.dsrListView">
+
+        <activity android:name="net.muteheadlight.docksoundredir.dsrListView" >
             <intent-filter>
-	            <action android:name="android.intent.action.MAIN" />
-	            <category android:name="android.intent.category.LAUNCHER"></category>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="net.muteheadlight.docksoundredir.dockRedirRegisterer"></service>
+        
+        <activity
+            android:name="net.muteheadlight.docksoundredir.tasker.TaskerChooser"
+            android:label="@string/title_activity_tasker_chooser"
+            android:theme="@android:style/Theme.Black" >
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="net.muteheadlight.docksoundredir.tasker.TaskerReceiver" >
+            <intent-filter>
+				<action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING"/>
+			</intent-filter>
+        </receiver>
     </application>
+
 </manifest>

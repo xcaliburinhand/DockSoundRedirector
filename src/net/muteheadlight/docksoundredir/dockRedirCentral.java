@@ -18,11 +18,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 public final class dockRedirCentral {
-	static final String TAG = "dockSoundRedirector";
+	static private final String TAG = "dockSoundRedirector";
 	static final String PREFS_NAME = "prefsDockRedir";
 	protected static PowerManager.WakeLock mWakeLock;
 	private static boolean debuggable = false;
 	
+	public static String getTag() {
+		return TAG;
+	}
+
 	public static final void logD(String message) {
 		if(debuggable)
 			Log.d(TAG, message);
@@ -121,5 +125,24 @@ public final class dockRedirCentral {
 				context.startActivity(Intent.createChooser(email, "Choose an Email client:"));
 		    }
     	};
+    }
+    
+    public static final void warmUp(Context context) {
+    	logD("warming up application");
+    	
+    	SharedPreferences settings = context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
+    	if (settings.getInt("_mediaVolume", -999) == -999) { //set some defaults
+    		SharedPreferences.Editor editor = settings.edit();
+			editor.putBoolean("carRedir", true);
+			editor.putBoolean("deskRedir", true);
+			editor.putBoolean("showToast", true);
+			editor.remove("mediaVolume").putBoolean("mediaVolume", false); //cleanup, type change from previous versions
+			editor.putInt("_mediaVolume", -1);
+			editor.commit();
+			logD("default settings applied");
+		 }
+		 
+		 final PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+		 mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, dockRedirCentral.getTag());
     }
 }

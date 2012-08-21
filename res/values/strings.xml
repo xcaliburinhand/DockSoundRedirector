@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Dock Sound Redirector</string>
     <string name="app_author">By xcaliburinhand\nVersion:&#160;</string>
+
     <string-array name="checks_keys">
         <item>carRedir</item>
         <item>deskRedir</item>
@@ -18,8 +20,13 @@
         <item>Maximize volume when docked</item>
         <item>Fall back to v1 redirection</item>
     </string-array>
+
     <string name="unsupported">Cannot find a supported ROM or kernel</string>
     <string name="unsupported_manu">Device not made by Samsung</string>
     <string name="support">Request\nDevice\nSupport</string>
     <string name="redirection">Redirection</string>
+    
+    <string name="taskerNormal">Redirect Normal</string>
+    <string name="taskerRedirect">Redirect to Dock</string>
+    <string name="title_activity_tasker_chooser">Dock Sound Redirector Tasker Choice</string>
 </resources>

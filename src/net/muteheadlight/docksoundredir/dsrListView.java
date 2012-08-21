@@ -24,7 +24,7 @@ public class dsrListView extends ListActivity {
 		super.onCreate(icicle);
 		
 		if(dockRedirCentral.imSupported(this,true)){
-			startService(new Intent(this, dockRedirRegisterer.class));
+			dockRedirCentral.warmUp(this);
 	        
 			setContentView(R.layout.main);
 	        
@@ -63,7 +63,7 @@ public class dsrListView extends ListActivity {
 			ArrayAdapter<Setting> adapter = new InteractiveArrayAdapter(this,listSettings());
 			setListAdapter(adapter);
     	} else {
-    		Log.i(dockRedirCentral.TAG,"I am not supported, exiting!");
+    		Log.i(dockRedirCentral.getTag(),"I am not supported, exiting!");
     		setContentView(R.layout.unsupported);
     	}
 	}
