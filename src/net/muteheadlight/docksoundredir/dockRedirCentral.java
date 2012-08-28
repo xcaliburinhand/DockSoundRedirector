@@ -145,4 +145,28 @@ public final class dockRedirCentral {
 		 final PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
 		 mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, dockRedirCentral.getTag());
     }
+    
+    public static final int getDockDeviceNumber(Context context) {
+    	int _deviceNum = 0x0000;
+    	String dev = Build.DEVICE.toLowerCase();
+    			
+    	if (Build.DISPLAY.toLowerCase().contains("cm") || (dev.contains("i9000") && !Build.DISPLAY.contains("."))) {
+			_deviceNum = 0x800; //2048 handle legacy devices running CM
+		} else if (dev.contains("d700") || dev.contains("g70") || dev.contains("gi1") || dev.contains("i400") || dev.contains("i500") || dev.contains("i510") || dev.contains("i727") || dev.contains("i777") || dev.contains("i896") || dev.contains("i897") || dev.contains("i9000") || dev.contains("i9003") || dev.contains("i997") || dev.contains("t959") || dev.contains("t989")) { //Galaxy S I
+    		_deviceNum = 0x1000; //4096
+    	} else if (dev.contains("i9001")) {
+    		_deviceNum = 0x4000; //16384
+    	} else { //default
+    		_deviceNum = 0x800; //2048
+    	}
+    	
+    	//store dock device number for future lookup
+    	SharedPreferences settings = context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
+    	SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("_deviceNum", _deviceNum);
+        editor.commit();
+        
+        //send back the number
+        return _deviceNum;
+    }
 }

@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
-import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -55,7 +54,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
 				 editor.putBoolean("_useKernel", dockRedirCentral.useKernel());
 				 				     
 				 dockRedirCentral.warmUp(_context);
-				 _deviceNum = getDockDeviceNumber(); //refresh dock device number on boot
+				 _deviceNum = dockRedirCentral.getDockDeviceNumber(_context); //refresh dock device number on boot
 			 }
     	 } else {
     		if (!dockRedirCentral.imSupported(_context,true)) return;
@@ -178,35 +177,11 @@ public class dockSoundRedirect extends BroadcastReceiver{
     
     private void redirectConnectionState(int _deviceNum, int enable) {
     	if(_deviceNum == 0x0000){
-    		_deviceNum = getDockDeviceNumber();
+    		_deviceNum = dockRedirCentral.getDockDeviceNumber(_context);
     	}
     	
     	setDeviceConnectionState(_deviceNum, enable, "");
     	dockRedirCentral.logD("redirecting via connection state - dev: "+ String.valueOf(_deviceNum));
-    }
-    
-    private int getDockDeviceNumber() {
-    	int _deviceNum = 0x0000;
-    	String dev = Build.DEVICE.toLowerCase();
-    			
-    	if (Build.DISPLAY.toLowerCase().contains("cm") || (dev.contains("i9000") && !Build.DISPLAY.contains("."))) {
-			_deviceNum = 0x800; //2048 handle legacy devices running CM
-		} else if (dev.contains("d700") || dev.contains("g70") || dev.contains("gi1") || dev.contains("i400") || dev.contains("i500") || dev.contains("i510") || dev.contains("i896") || dev.contains("i897") || dev.contains("i9000") || dev.contains("i9003") || dev.contains("i997") || dev.contains("t959") || dev.contains("i997")) { //Galaxy S I
-    		_deviceNum = 0x1000; //4096
-    	} else if (dev.contains("i9001")) {
-    		_deviceNum = 0x4000; //16384
-    	} else { //default
-    		_deviceNum = 0x800; //2048
-    	}
-    	
-    	//store dock device number for future lookup
-    	SharedPreferences settings = _context.getSharedPreferences(dockRedirCentral.PREFS_NAME, 0);
-    	SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("_deviceNum", _deviceNum);
-        editor.commit();
-        
-        //send back the number
-        return _deviceNum;
     }
     
     // The following is a grab from Dan Walkes toggleheadset2 - http://code.google.com/p/toggleheadset2/

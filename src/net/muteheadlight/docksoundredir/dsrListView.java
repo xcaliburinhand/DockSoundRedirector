@@ -25,6 +25,7 @@ public class dsrListView extends ListActivity {
 		
 		if(dockRedirCentral.imSupported(this,true)){
 			dockRedirCentral.warmUp(this);
+			dockRedirCentral.getDockDeviceNumber(getApplicationContext());
 	        
 			setContentView(R.layout.main);
 	        
