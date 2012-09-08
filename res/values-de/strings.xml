@@ -11,17 +11,17 @@
         <item>fallback</item>
     </string-array>
     <string-array name="checks">
-        <item>Leiten Sie Audio über Auto-Dock</item>
-        <item>Leiten Sie Audio über Schreibtisch-Dock</item>
+        <item>Audio über Auto-Dock umleiten</item>
+        <item>Audio über Schreibtisch-Dock umleiten</item>
         <item>Benachrichtigung anzeigen</item>
-        <item>halten auf dem Bildschirm, wenn angedockt</item>
-        <item>Volumen zu maximieren, wenn angedockt</item>
-        <item>Fallback auf v1 Umleitung</item>
+        <item>Bildschirm immer an, wenn angedockt</item>
+        <item>Lautstärke max., wenn angedockt</item>
+        <item>V1 Umleitung verwenden</item>
     </string-array>
     <string name="unsupported">Nicht unterstützten ROM or kernel</string>
     <string name="unsupported_manu">Handy nicht von Samsung</string>
-    <string name="support">Request\nDevice\nSupport</string>
-    <string name="redirection">Redirection</string>
+    <string name="support">Geräte-Support\nanfragen</string>
+    <string name="redirection">Umleitung</string>
     
     <string name="taskerNormal">Redirect Normal</string>
     <string name="taskerRedirect">Redirect to Dock</string>
