@@ -59,11 +59,21 @@ public class dockSoundRedirect extends BroadcastReceiver{
     	 } else {
     		if (!dockRedirCentral.imSupported(_context,true)) return;
     		
-	    	int dockstate = intent.getIntExtra("android.intent.extra.DOCK_STATE", 0);
+    		int dockstate;
+    		if (intent.getAction().contains("WIDGET")) {
+    			dockRedirCentral.logD("redirect widget triggered");
+    			if(!settings.getBoolean("_redirected", false) && _docked){
+    				dockstate = 10;
+    			} else {
+    				dockstate = 0;
+    			}
+    		} else {
+    			dockstate = intent.getIntExtra("android.intent.extra.DOCK_STATE", 0);
+    		}
 	    	editor.putString("_lastIntent", settings.getString("_lastIntent", "None").concat(" - devID: "+ dockstate));
 	    	
 	    	//Logic to prevent being triggered by rebroadcast
-	    	if((dockstate == 1 || dockstate == 2) && _docked && (intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0))
+	    	if((dockstate == 1 || dockstate == 2) && _docked && (intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0) && !intent.getAction().contains("WIDGET"))
 	    		return;
 	    	
 	    	if(dockstate == 0 && !_docked)
@@ -72,7 +82,7 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	        CharSequence text = "Dock Audio Redirection Disabled";
 	        
 	    	if (dockstate > 0){
-	    		if ((dockstate == 2 & carRedir) || (dockstate == 1 && deskRedir) || (intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") == 0)){
+	    		if ((dockstate == 2 & carRedir) || (dockstate == 1 && deskRedir) || (intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") == 0) || intent.getAction().contains("WIDGET")){
 	    			if (!fallback) {
 	    				redirectConnectionState(_deviceNum,1);
 	    			} else {
@@ -101,11 +111,11 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	        		editor.putBoolean("_redirected", true);
 	    		}
         		//If redirect was triggered manually, don't change dock status
-        		if(intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0) 
-        		editor.putBoolean("_docked", true);
+        		if(intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0 && !intent.getAction().contains("WIDGET")) 
+        			editor.putBoolean("_docked", true);
 	    	} else {
 	    		//If redirect was triggered manually, don't change dock status
-	            if(intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0)
+	            if(intent.getAction().compareTo("net.muteheadlight.docksoundredir.intent.action.REDIRECT") != 0 && !intent.getAction().contains("WIDGET"))
         			editor.putBoolean("_docked", false); 
 	            
 	            //Pause any playing audio
