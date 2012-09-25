@@ -152,7 +152,7 @@ public final class dockRedirCentral {
     			
     	if (Build.DISPLAY.toLowerCase().contains("cm") || (dev.contains("i9000") && (!Build.DISPLAY.contains(".") || Build.DISPLAY.matches("\\d\\.\\d"))) || (dev.contains("t959") && (!Build.DISPLAY.contains(".") || Build.DISPLAY.matches("\\d\\.\\d")))) {
 			_deviceNum = 0x800; //2048 handle legacy devices running CM
-		} else if (dev.contains("d700") || dev.contains("g70") || dev.contains("gi1") || dev.contains("i400") || dev.contains("i500") || dev.contains("i510") || dev.contains("i777") || dev.contains("i896") || dev.contains("i897") || dev.contains("i9000") || dev.contains("i9003") || dev.contains("i997") || dev.contains("t959") || dev.contains("t989")) { //Galaxy S I
+		} else if (dev.contains("d700") || dev.contains("g70") || dev.contains("gi1") || dev.contains("i400") || dev.contains("i500") || dev.contains("i510") || dev.contains("i777") || dev.contains("i896") || dev.contains("i897") || dev.contains("i9000") || dev.contains("i9003") || dev.contains("i9070") || dev.contains("i997") || dev.contains("t959") || dev.contains("t989")) { //Galaxy S I
     		_deviceNum = 0x1000; //4096
     	} else if (dev.contains("i9001") || dev.contains("s5360") || dev.contains("s5830")) {
     		_deviceNum = 0x4000; //16384
