@@ -120,7 +120,11 @@ public class dockSoundRedirect extends BroadcastReceiver{
 	            
 	            //Pause any playing audio
         	    Intent intent1 = new Intent(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
-        	    _context.sendBroadcast(intent1);
+        	    try {
+        	    	_context.sendBroadcast(intent1);
+        	    } catch (Exception Ex) {
+        	    	//do nothing
+        	    }
 	            
 	            if (!fallback){
 	            	redirectConnectionState(_deviceNum,0);

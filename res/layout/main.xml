@@ -13,7 +13,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:text="@string/support" />
+            android:text="@string/support"
+            android:visibility="invisible" />
 
         <ToggleButton
             android:id="@+id/toggleRedir"
